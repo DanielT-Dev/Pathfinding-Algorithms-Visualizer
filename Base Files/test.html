@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>
+            Pathfinding Algortihms Visualizer
+        </title>
+
+        <link rel="stylesheet" href="./test.css"/>
+    </head>
+    <body>
+        <div class="main_container">
+            <h1 class="title">
+                Pathfinding Algortihms Visualizer
+            </h1>
+
+            <div class="settings">
+                <div id="select_algorithm">
+                    <button>
+                        Select Algorithm
+                    </button>
+                </div>
+
+                <div id="select_colors">
+                    <div class="color">
+                        <label>
+                            Start 
+                        </label>
+                        <button id="color1" class="circle_button">
+
+                        </button>
+                    </div>
+                    
+                    <div class="color">
+                        <label>
+                            Visited
+                        </label>
+                        <button id="color2" class="circle_button">
+
+                        </button>
+                    </div>
+
+                    <div class="color">
+                        <label>
+                            Finished
+                        </label>
+                        <button id="color3" class="circle_button">
+
+                        </button>
+                    </div>
+                </div>
+
+                <div id="select_speed">
+                    <button>
+                        x10
+                    </button>
+                </div>
+
+                <div id="controls">
+                    <button onclick="handle_start()">
+                        <img src="controls1.png"/>
+                    </button>
+                    <button>
+                        <img src="controls2.png"/>
+                    </button>
+                    <button>
+                        <img src="controls3.png"/>
+                    </button>
+                    <button>
+                        <img src="controls4.png"/>
+                    </button>
+                </div>
+            </div>
+
+            <div style="display: flex; flex-direction: row;">
+                <div class="visualizer">
+                
+                </div>
+    
+                <div class="live_stats">
+                    <h6>
+                        Live Stats
+                    </h6>
+                </div>
+            </div>
+            
+            <div class="other">
+                Other things about the algorithm.....
+                Other things about the algorithm.....
+                Other things about the algorithm.....
+                Other things about the algorithm.....
+                <br/>
+                Other things about the algorithm.....
+                Other things about the algorithm.....
+                Other things about the algorithm.....
+                Other things about the algorithm.....
+                <br/>
+                Other things about the algorithm.....
+                Other things about the algorithm.....
+                Other things about the algorithm.....
+                Other things about the algorithm.....
+                <br/>
+                Other things about the algorithm.....
+                Other things about the algorithm.....
+                Other things about the algorithm.....
+                Other things about the algorithm.....
+                <br/>
+                Other things about the algorithm.....
+                Other things about the algorithm.....
+                Other things about the algorithm.....
+                Other things about the algorithm.....
+                <br/>
+            </div>
+        </div>
+
+        <script src="controls.js">
+        </script>
+    </body>
+</html>

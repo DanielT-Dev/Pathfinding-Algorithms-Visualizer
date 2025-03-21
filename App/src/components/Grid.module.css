@@ -1,0 +1,28 @@
+.grid {
+    display: grid;
+    grid-template-columns: repeat(30, 1fr); /* 20 equal columns */
+    grid-template-rows: repeat(20, 1fr); /* 20 equal rows */
+    gap: 1px; /* Small gap between cells */
+    width: 100%;
+    height: 50vh; /* Full viewport height */
+    box-sizing: border-box; /* Ensures padding and border are included in width/height */
+  }
+  
+  .cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(240, 240, 240);
+    cursor: pointer;
+    text-align: center;
+    font-size: 12px;
+    overflow: hidden; /* Prevent overflow inside cell */
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box; /* Makes sure content stays inside the cell bounds */
+  }
+  
+  .grid > * {
+    object-fit: contain; /* Ensures images or content fit without overflowing */
+  }
+  
