@@ -11,7 +11,7 @@ body {
 button {
     border: none;
     cursor: pointer;
-    background-color: rgb(247, 247, 250);;
+    background-color: rgb(235, 235, 240);;;
 }
 
 .main_container {
@@ -72,11 +72,14 @@ h1 {
 .select_algorithm {
     width: 20%;
 }
-
+.select_speed {
+    width: 28vw;
+    padding: 0;
+}
 .select_speed button {
     font-size: 125%;
     font-weight: 600;
-    background-color: rgb(247, 247, 250);
+    background-color: rgb(235, 235, 240);;
 }
 
 .controls {
@@ -87,6 +90,8 @@ h1 {
 
 .live_stats {
     position: relative;
+    display: flex;
+    flex-direction: column;
     width: 11.5vw;
     height: 50vh;
     background-color: white;
@@ -94,14 +99,29 @@ h1 {
     border-right: 2px solid rgb(200, 200, 200);
     border-bottom: 2px solid rgb(200, 200, 200);
 }
+.live_stats div {
+    height: 50%;
+}
 
 .live_stats h6 {
     margin: 0;
     margin-top: 2vh;
+    margin-bottom: 2vh;
     font-size: 2vh;
     font-weight: 400;
     color: black;
     text-align: center;
+}
+.live_stats p {
+    margin-left: 1vw;
+    margin-top: 0.5vh;
+    margin-bottom: 0.5vh;
+    font-size: 1.4vh;
+    font-weight: 300;
+}
+.logs {
+    height: 70% !important;
+    overflow-y: scroll;
 }
 
 .other {
@@ -114,7 +134,7 @@ h1 {
     width: 10vw;
     height: 6vh;
     font-size: 1.5vh;
-    background-color: rgb(247, 247, 250);;
+    background-color: rgb(235, 235, 240);;;
     border-radius: 10px;
     margin-right: 1vw;
 }

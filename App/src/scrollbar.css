@@ -1,0 +1,30 @@
+/* scrollbar.css */
+
+/* Custom scrollbar styles */
+.scrollbar {
+  overflow: auto;
+}
+
+/* Style the scrollbar itself */
+.scrollbar::-webkit-scrollbar {
+  width: 1.25vh !important; /* Width of the vertical scrollbar */
+  height: 12px !important; /* Height of the horizontal scrollbar */
+}
+
+/* Style the track (the background part of the scrollbar) */
+.scrollbar::-webkit-scrollbar-track {
+  background: rgb(235, 235, 240) !important;
+  border-radius: 10px !important;
+}
+
+/* Style the thumb (the draggable part of the scrollbar) */
+.scrollbar::-webkit-scrollbar-thumb {
+  background: rgb(175, 175, 175) !important;
+  border-radius: 10px !important;
+  border: 2px solid #f1f1f1 !important;
+}
+
+/* Style the thumb on hover */
+.scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgb(125, 125, 125) !important;
+}

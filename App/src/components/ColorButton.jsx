@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styles from './ColorButton.module.css';
 
-const ColorButton = ({ colorType = 'start', defaultColor, onColorChange }) => {
-  const [color, setColor] = useState(defaultColor);
+const ColorButton = ({ label, default_color, onColorChange }) => {
+  const [color, setColor] = useState(default_color);
 
   const handleColorChange = () => {
     const newColor = prompt('Enter new color', color);
@@ -13,24 +13,11 @@ const ColorButton = ({ colorType = 'start', defaultColor, onColorChange }) => {
   };
 
   let buttonClass;
-  switch (colorType.toLowerCase()) {
-    case 'start':
-      buttonClass = styles.colorButtonDefault;
-      break;
-    case 'visited':
-      buttonClass = styles.colorButtonVisited;
-      break;
-    case 'finished':
-      buttonClass = styles.colorButtonFinished;
-      break;
-    default:
-      buttonClass = styles.colorButtonDefault;
-  }
 
   return (
     <div className={styles.colorButtonWrapper}>
       <label className={styles.colorButtonLabel}>
-        {colorType.charAt(0).toUpperCase() + colorType.slice(1)}
+        {label.charAt(0).toUpperCase() + label.slice(1)}
       </label>
       <button
         className={`${styles.colorButton} ${buttonClass}`}

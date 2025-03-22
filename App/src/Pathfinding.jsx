@@ -1,24 +1,86 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import './style.css';
+import "./scrollbar.css";
 
 import ColorButton from './components/ColorButton';
 import Grid from './components/Grid';
 
+import { Lee } from './data/Lee';
+import SliderSpeed from './components/SliderSpeed';
+
+import { get_time_since } from './utils';
+
 const Pathfinding = () => {
-  const [algorithm, setAlgorithm] = useState(null);
-  const [startColor, setStartColor] = useState('#ff0000');
-  const [visitedColor, setVisitedColor] = useState('#00ff00');
-  const [finishedColor, setFinishedColor] = useState('#0000ff');
-  const [speed, setSpeed] = useState('x1');
+
+  const [algorithm, setAlgorithm] = useState(Lee);
   const [is_running, set_is_running] = useState(false);
+
+  const [logs, setLogs] = useState([]);
+  const [timestamps, setTimestamps] = useState([]);
+
+  // Create useRef to keep track of the logs and timestamps
+  const logsRef = useRef(logs);
+  const timestampsRef = useRef(timestamps);
+
+  // Update logsRef and timestampsRef directly
+  const updateLogsAndTimestamps = (newLogs, newTimestamps) => {
+    logsRef.current = newLogs;
+    timestampsRef.current = newTimestamps;
+  };
 
   const handleStart = () => {
     set_is_running(true);
+
+    if (logs.length === 0) {
+      const newLogs = ["Algorithm started."];
+      const newTimestamps = [{ timestamp: new Date(), value: "0.00" }];
+      setLogs(newLogs);
+      setTimestamps(newTimestamps);
+      updateLogsAndTimestamps(newLogs, newTimestamps);
+    } else {
+      const start_time = timestamps[0].timestamp;
+      const current_time = new Date();
+      const time_diff = get_time_since(start_time, current_time);
+
+      const newLogs = [...logs, "Algorithm resumed."];
+      const newTimestamps = [
+        ...timestamps,
+        { timestamp: current_time, value: time_diff },
+      ];
+
+      setLogs(newLogs);
+      setTimestamps(newTimestamps);
+      updateLogsAndTimestamps(newLogs, newTimestamps);
+    }
   };
 
   const handleStop = () => {
     set_is_running(false);
+
+    const newLogs = [...logs, "Algorithm stopped."];
+    const start_time = timestamps[0].timestamp;
+    const current_time = new Date();
+    const time_diff = get_time_since(start_time, current_time);
+
+    const newTimestamps = [
+      ...timestamps,
+      { timestamp: current_time, value: time_diff },
+    ];
+
+    setLogs(newLogs);
+    setTimestamps(newTimestamps);
+    updateLogsAndTimestamps(newLogs, newTimestamps);
   }
+
+  useEffect(() => {
+    console.log('Logs changed:', logs);
+  }, [logs]);
+  
+  // Effect for timestamps
+  useEffect(() => {
+    console.log('Timestamps changed:', timestamps);
+  }, [timestamps]);
+  
 
   return (
     <div className="main_container">
@@ -27,32 +89,25 @@ const Pathfinding = () => {
     <div className="settings">
       <div className="select_algorithm">
         <button onClick={() => setAlgorithm('Dijkstra')}>
-          Select Algorithm (Current: {algorithm || 'None'})
+          Select Algorithm (Current: {algorithm.name || 'None'})
         </button>
       </div>
 
       <div className="select_colors">
-        <ColorButton
-          label="Start"
-          color={startColor}
-          onClick={() => handleColorChange(startColor, setStartColor)}
-        />
-        <ColorButton
-          label="Visited"
-          color={visitedColor}
-          onClick={() => handleColorChange(visitedColor, setVisitedColor)}
-        />
-        <ColorButton
-          label="Finished"
-          color={finishedColor}
-          onClick={() => handleColorChange(finishedColor, setFinishedColor)}
-        />
+        {
+          algorithm.colors.map((color, index) => {
+            return <ColorButton
+              key={index}
+              label={color.label}
+              default_color={color.color}
+              onClick={() => handleColorChange(startColor, setStartColor)}
+            />
+          })
+        }
       </div>
 
       <div className="select_speed">
-        <button onClick={() => setSpeed(speed === 'x1' ? 'x10' : 'x1')}>
-          Speed {speed}
-        </button>
+        <SliderSpeed speeds={algorithm.speeds}/>
       </div>
 
       <div className="controls">
@@ -84,7 +139,21 @@ const Pathfinding = () => {
       </div>
 
       <div className="live_stats">
-        <h6>Live Stats</h6>
+        <div>
+          <h6>Command Logs</h6>
+          <div className="logs scrollbar">
+          {
+            logs.map((log, index) => (
+              <p key={index}>
+               [{timestamps[index].value}] - {log}
+              </p>
+            ))
+          }
+          </div>
+        </div>
+        <div>
+          <h6>Live Stats</h6>
+        </div>
       </div>
     </div>
 
