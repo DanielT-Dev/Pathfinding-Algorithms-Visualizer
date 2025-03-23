@@ -32,7 +32,7 @@ const Pathfinding = () => {
     set_is_running(true);
 
     if (logs.length === 0) {
-      const newLogs = ["Algorithm started."];
+      const newLogs = ["Started."];
       const newTimestamps = [{ timestamp: new Date(), value: "0.00" }];
       setLogs(newLogs);
       setTimestamps(newTimestamps);
@@ -42,7 +42,7 @@ const Pathfinding = () => {
       const current_time = new Date();
       const time_diff = get_time_since(start_time, current_time);
 
-      const newLogs = [...logs, "Algorithm resumed."];
+      const newLogs = [...logs, "Resumed."];
       const newTimestamps = [
         ...timestamps,
         { timestamp: current_time, value: time_diff },
@@ -57,7 +57,7 @@ const Pathfinding = () => {
   const handleStop = () => {
     set_is_running(false);
 
-    const newLogs = [...logs, "Algorithm stopped."];
+    const newLogs = [...logs, "Stopped."];
     const start_time = timestamps[0].timestamp;
     const current_time = new Date();
     const time_diff = get_time_since(start_time, current_time);
@@ -72,11 +72,48 @@ const Pathfinding = () => {
     updateLogsAndTimestamps(newLogs, newTimestamps);
   }
 
+  const handlePause = () => {
+    set_is_running(false);
+
+    const newLogs = [...logs, "Paused."];
+    const start_time = timestamps[0].timestamp;
+    const current_time = new Date();
+    const time_diff = get_time_since(start_time, current_time);
+
+    const newTimestamps = [
+      ...timestamps,
+      { timestamp: current_time, value: time_diff },
+    ];
+
+    setLogs(newLogs);
+    setTimestamps(newTimestamps);
+    updateLogsAndTimestamps(newLogs, newTimestamps);
+  }
+
+  const handleReset = () => {
+    set_is_running(false);
+
+    const newLogs = [];
+    const newTimestamps = [];
+
+    setLogs(newLogs);
+    setTimestamps(newTimestamps);
+    updateLogsAndTimestamps(newLogs, newTimestamps);
+  }
+
+  const assign_color = (log) => {
+    if (log == 'Started.' || log == 'Resumed.')
+      return "rgb(50, 200, 50)";
+    if (log == 'Stopped.')
+      return "rgb(200, 50, 50)";
+    if (log == 'Paused.')
+      return "rgb(255, 170, 50)";
+  }
+
   useEffect(() => {
     console.log('Logs changed:', logs);
   }, [logs]);
-  
-  // Effect for timestamps
+   
   useEffect(() => {
     console.log('Timestamps changed:', timestamps);
   }, [timestamps]);
@@ -124,10 +161,10 @@ const Pathfinding = () => {
           </button>
         }
         
-        <button>
+        <button onClick={handlePause}>
           <img src="controls2.png" alt="Control 2" />
         </button>
-        <button>
+        <button onClick={handleReset}>
           <img src="controls4.png" alt="Control 4" />
         </button>
       </div>
@@ -143,11 +180,21 @@ const Pathfinding = () => {
           <h6>Command Logs</h6>
           <div className="logs scrollbar">
           {
-            logs.map((log, index) => (
-              <p key={index}>
+            logs.map((log, index) => {
+              const color = assign_color(log);
+              console.log(color)
+              return (
+                <p 
+                key={index}
+                style={{
+                  color: assign_color(log),
+                  fontWeight: 600,
+                }}
+              >
                [{timestamps[index].value}] - {log}
               </p>
-            ))
+              )}
+            )
           }
           </div>
         </div>
