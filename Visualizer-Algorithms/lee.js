@@ -21,21 +21,10 @@ function findValue(matrix, rows, cols, value)
     return [-1, -1];
 }
 
-export function Lee()
+export function Lee(matrix)
 {
     const dx = [0, 0, 1, -1];
     const dy = [1, -1, 0, 0];
-
-    let matrix = 
-    [
-        [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
-        [-1, 1, 0, 0, 0, -1, 0, 0, -2, -1],
-        [-1, -1, -1, 0, -1, -1, 0, -1, -1, -1],
-        [-1, 0, 0, 0, 0, 0, 0, 0, 0, -1],
-        [-1, 0, -1, -1, -1, -1, -1, -1, 0, -1],
-        [-1, 0, 0, 0, 0, 0, 0, -1, 0, -1],
-        [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
-    ]; 
 
     const rows = matrix.length;
     const cols = matrix[0].length;

@@ -6,7 +6,7 @@ import ColorButton from './components/ColorButton';
 import Grid from './components/Grid';
 import Dropdwon from './components/Dropdown';
 
-import { Lee } from './data/algorithms';
+import { Lee_DTO } from './data/algorithms';
 import { DFS_DTO } from './data/algorithms';
 import SliderSpeed from './components/SliderSpeed';
 
@@ -15,7 +15,7 @@ import { get_time_since } from './utils';
 const Pathfinding = () => {
 
   const [algorithm_name, set_algorithm_name] = useState(null)
-  const [algorithm, setAlgorithm] = useState(Lee);
+  const [algorithm, setAlgorithm] = useState(DFS_DTO);
   const [is_running, set_is_running] = useState(false);
 
   const [logs, setLogs] = useState([]);
@@ -135,6 +135,9 @@ const Pathfinding = () => {
 
     if (algorithm_name == 'DFS')
       setAlgorithm(DFS_DTO)
+    if (algorithm_name == 'Lee')
+      setAlgorithm(Lee_DTO)
+    
   }, [algorithm_name])
 
   return (
