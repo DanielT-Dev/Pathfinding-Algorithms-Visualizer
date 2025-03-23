@@ -6,7 +6,8 @@ import ColorButton from './components/ColorButton';
 import Grid from './components/Grid';
 import Dropdwon from './components/Dropdown';
 
-import { Lee } from './data/Lee';
+import { Lee } from './data/algorithms';
+import { DFS_DTO } from './data/algorithms';
 import SliderSpeed from './components/SliderSpeed';
 
 import { get_time_since } from './utils';
@@ -31,7 +32,6 @@ const Pathfinding = () => {
   };
 
   const handleStart = () => {
-    alert(algorithm_name)
       
     set_is_running(true);
 
@@ -55,7 +55,12 @@ const Pathfinding = () => {
       setLogs(newLogs);
       setTimestamps(newTimestamps);
       updateLogsAndTimestamps(newLogs, newTimestamps);
+
     }
+    console.log("[front-end] Algorithm started")
+    console.log(algorithm)
+    algorithm.controls.start()
+    console.log("[front-end] Algorithm finished successfully")
   };
 
   const handleStop = () => {
@@ -118,15 +123,18 @@ const Pathfinding = () => {
   }
 
   useEffect(() => {
-    console.log('Logs changed:', logs);
+    //console.log('Logs changed:', logs);
   }, [logs]);
    
   useEffect(() => {
-    console.log('Timestamps changed:', timestamps);
+    //console.log('Timestamps changed:', timestamps);
   }, [timestamps]);
   useEffect(() => {
     handleReset()
     set_is_running(false)
+
+    if (algorithm_name == 'DFS')
+      setAlgorithm(DFS_DTO)
   }, [algorithm_name])
 
   return (
@@ -189,8 +197,6 @@ const Pathfinding = () => {
           <div className="logs scrollbar">
           {
             logs.map((log, index) => {
-              const color = assign_color(log);
-              console.log(color)
               return (
                 <p 
                 key={index}

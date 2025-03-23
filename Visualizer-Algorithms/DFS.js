@@ -1,39 +1,7 @@
-function inMatrix(i, j, rows, cols)
-{
-    return (i >=0 && j >= 0 && i < rows && j < cols);
-}
+import { inMatrix } from "./utils"
+import { findValue } from "./utils";
 
-// start = 1, end = -2
-
-// [-1, -1] == start/end not found (error)
-
-function findValue(matrix, rows, cols, value)
-{
-    for (let i = 0; i < rows; i++)
-    {
-        for (let j = 0; j < cols; j++)
-        {
-            if (matrix[i][j] == value)
-            {
-                return [i, j];
-            }
-        }
-    }
-    return [-1, -1];
-}
-
-let matrix = 
-    [
-        [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
-        [-1, 1, 0, 0, 0, -1, 0, 0, -2, -1],
-        [-1, -1, -1, 0, -1, -1, 0, -1, -1, -1],
-        [-1, 0, 0, 0, 0, 0, 0, 0, 0, -1],
-        [-1, 0, -1, -1, -1, -1, -1, -1, 0, -1],
-        [-1, 0, 0, 0, 0, 0, 0, -1, 0, -1],
-        [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
-    ];
-
-function DFS()
+export function DFS(matrix)
 {
     const dx = [0, 0, 1, -1];
     const dy = [1, -1, 0, 0]; 
