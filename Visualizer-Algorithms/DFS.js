@@ -1,70 +1,75 @@
-const dx = [0, 0, 1, -1];
-const dy = [1, -1, 0, 0];
-
-let matrix = 
-[
-    [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
-    [-1, 1, 0, 0, 0, -1, 0, 0, -2, -1],
-    [-1, -1, -1, 0, -1, -1, 0, -1, -1, -1],
-    [-1, 0, 0, 0, 0, 0, 0, 0, 0, -1],
-    [-1, 0, -1, -1, -1, -1, -1, -1, 0, -1],
-    [-1, 0, 0, 0, 0, 0, 0, -1, 0, -1],
-    [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
-]; 
-
-const rows = matrix.length;
-const cols = matrix[0].length;
-
-function inMatrix(i, j)
+function inMatrix(i, j, rows, cols)
 {
     return (i >=0 && j >= 0 && i < rows && j < cols);
 }
 
 // start = 1, end = -2
 
-// [-1, -1] == start not found (error)
-function findStart(matrix, rows, cols)
+// [-1, -1] == start/end not found (error)
+
+function findValue(matrix, rows, cols, value)
 {
     for (let i = 0; i < rows; i++)
     {
         for (let j = 0; j < cols; j++)
         {
-            if (matrix[i][j] == 1)
+            if (matrix[i][j] == value)
             {
                 return [i, j];
             }
         }
     }
-
     return [-1, -1];
 }
 
-let start = findStart(matrix, rows, cols);
+let matrix = 
+    [
+        [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
+        [-1, 1, 0, 0, 0, -1, 0, 0, -2, -1],
+        [-1, -1, -1, 0, -1, -1, 0, -1, -1, -1],
+        [-1, 0, 0, 0, 0, 0, 0, 0, 0, -1],
+        [-1, 0, -1, -1, -1, -1, -1, -1, 0, -1],
+        [-1, 0, 0, 0, 0, 0, 0, -1, 0, -1],
+        [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
+    ];
 
-function DFS(start)
+function DFS()
 {
+    const dx = [0, 0, 1, -1];
+    const dy = [1, -1, 0, 0]; 
 
-    if (start == [-1, -1])
+    const rows = matrix.length;
+    const cols = matrix[0].length;
+
+    let start = findValue(matrix, rows, cols, 1);
+    let end = findValue(matrix, rows, cols, -2);
+
+    if (start[0] == -1 || end[0] == -1)
     {
-        alert("Start not found!\n");
+        alert("Start or End not found!\n");
         return;
     }
 
     let st = [];
-    let top = [];
     let row;
     let col;
     let step;
 
+    let inStack = 0;
+    let visited = 0;
+    let revisited = 0;
+
     st.push([start[0], start[1], 1]);
+    inStack++;
 
     while (st.length != 0)
     {
         [row, col, step] = st.pop();
+        inStack--;
 
-        if (matrix[row][col] == -2)
+        if (row == end[0] && col == end[1])
         {
-            console.log("Found it at: " + row + " " + col);
+            console.table(matrix);
             return;
         }
 
@@ -75,10 +80,20 @@ function DFS(start)
             let newRow = row + dx[d];
             let newCol = col + dy[d];
 
-            if (inMatrix(newRow, newCol) && (matrix[newRow][newCol] == 0 || matrix[newRow][newCol] == -2 || step < matrix[newRow][newCol]))
+            if (inMatrix(newRow, newCol, rows, cols) && (matrix[newRow][newCol] == 0 || matrix[newRow][newCol] == -2 || step + 1 < matrix[newRow][newCol]))
             {
+                // Telemetry
+                if (matrix[newRow][newCol] != 0)
+                {
+                    revisited++;
+                }
+                visited++;
+
                 st.push([newRow, newCol, step + 1]);
+                inStack++;
             }
         }
+
+        console.log("visited: " + visited + "\nrevisited: " + revisited + "\ninStack: " + inStack + "\n");
     }
 }
