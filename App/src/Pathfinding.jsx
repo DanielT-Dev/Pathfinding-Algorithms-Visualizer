@@ -4,6 +4,7 @@ import "./scrollbar.css";
 
 import ColorButton from './components/ColorButton';
 import Grid from './components/Grid';
+import Dropdwon from './components/Dropdown';
 
 import { Lee } from './data/Lee';
 import SliderSpeed from './components/SliderSpeed';
@@ -125,9 +126,7 @@ const Pathfinding = () => {
 
     <div className="settings">
       <div className="select_algorithm">
-        <button onClick={() => setAlgorithm('Dijkstra')}>
-          Select Algorithm (Current: {algorithm.name || 'None'})
-        </button>
+        <Dropdwon/>
       </div>
 
       <div className="select_colors">

@@ -55,6 +55,7 @@ h1 {
 .visualizer {
     position: relative;
     margin-left: 8%;
+    margin-top: 1vh;
     width: 66%;
     height: 50vh;
     background-color: white;
@@ -71,6 +72,11 @@ h1 {
 
 .select_algorithm {
     width: 20%;
+    margin-right: 1vw;
+}
+.select_algorithm button {
+    border-radius: 0 !important;
+    background: rgb(240, 240, 245);
 }
 .select_speed {
     width: 28vw;
@@ -79,7 +85,7 @@ h1 {
 .select_speed button {
     font-size: 125%;
     font-weight: 600;
-    background-color: rgb(235, 235, 240);;
+    background-color: rgb(245, 245, 250);
 }
 
 .controls {
@@ -89,6 +95,7 @@ h1 {
 }
 
 .live_stats {
+    margin-top: 1vh;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -100,6 +107,7 @@ h1 {
     border-bottom: 2px solid rgb(200, 200, 200);
 }
 .live_stats div {
+    
     height: 50%;
 }
 
@@ -134,7 +142,7 @@ h1 {
     width: 10vw;
     height: 6vh;
     font-size: 1.5vh;
-    background-color: rgb(235, 235, 240);;;
+    background: rgb(240, 240, 245);
     border-radius: 10px;
     margin-right: 1vw;
 }
@@ -191,6 +199,7 @@ h1 {
     height: 2.25vw;
     margin-left: 0.875vw;
     border-radius: 50%;
+    background: rgb(240, 240, 245);
 }
 
 .controls button img {
