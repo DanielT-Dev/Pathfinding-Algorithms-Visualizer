@@ -21,7 +21,7 @@ function findValue(matrix, rows, cols, value)
     return [-1, -1];
 }
 
-function Lee()
+export function Lee()
 {
     const dx = [0, 0, 1, -1];
     const dy = [1, -1, 0, 0];
