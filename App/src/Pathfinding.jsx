@@ -13,6 +13,7 @@ import { get_time_since } from './utils';
 
 const Pathfinding = () => {
 
+  const [algorithm_name, set_algorithm_name] = useState(null)
   const [algorithm, setAlgorithm] = useState(Lee);
   const [is_running, set_is_running] = useState(false);
 
@@ -30,6 +31,8 @@ const Pathfinding = () => {
   };
 
   const handleStart = () => {
+    alert(algorithm_name)
+      
     set_is_running(true);
 
     if (logs.length === 0) {
@@ -76,6 +79,9 @@ const Pathfinding = () => {
   const handlePause = () => {
     set_is_running(false);
 
+    if (logs.at(-1) == "Paused.")
+      return 
+
     const newLogs = [...logs, "Paused."];
     const start_time = timestamps[0].timestamp;
     const current_time = new Date();
@@ -118,7 +124,10 @@ const Pathfinding = () => {
   useEffect(() => {
     console.log('Timestamps changed:', timestamps);
   }, [timestamps]);
-  
+  useEffect(() => {
+    handleReset()
+    set_is_running(false)
+  }, [algorithm_name])
 
   return (
     <div className="main_container">
@@ -126,7 +135,7 @@ const Pathfinding = () => {
 
     <div className="settings">
       <div className="select_algorithm">
-        <Dropdwon/>
+        <Dropdwon set_algorithm_name={set_algorithm_name} disabled={is_running} />
       </div>
 
       <div className="select_colors">

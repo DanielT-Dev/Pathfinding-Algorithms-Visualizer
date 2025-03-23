@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import styles from './Dropdown.module.css';
 
-function Dropdown() {
+function Dropdown({ set_algorithm_name, disabled }) {
   const [isOpen, setIsOpen] = useState(false);
   const [algorithm, setAlgorithm] = useState(null);
   const dropdownRef = useRef(null);  // Ref for the dropdown container
@@ -22,15 +22,19 @@ function Dropdown() {
 
   const handleAlgorithmChange = (name) => {
     setAlgorithm({ name });
+    set_algorithm_name(name);
     setIsOpen(false);
   };
 
   return (
     <div className={styles.select_algorithm} ref={dropdownRef}>
-      <button onClick={() => setIsOpen(!isOpen)}>
+      <button 
+        onClick={() => !disabled && setIsOpen(!isOpen)} 
+        disabled={disabled}
+      >
         Select Algorithm (Current: <span>{algorithm?.name || 'None'}</span>)
       </button>
-      {isOpen && (
+      {isOpen && !disabled && (
         <div className={styles.dropdownMenu}>
           <button onClick={() => handleAlgorithmChange('DFS')}>DFS</button>
           <button onClick={() => handleAlgorithmChange('BFS')}>BFS</button>
