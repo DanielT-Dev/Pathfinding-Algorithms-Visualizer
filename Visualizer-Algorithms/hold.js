@@ -1,5 +1,7 @@
 let isHolding = false;
+
 const ignoredTags = ["BUTTON", "INPUT", "TEXT", "RANGE"];
+const allowedClass = ["ButtonsClass"];
 
 function isValidHold(e, ignoredTags)
 {

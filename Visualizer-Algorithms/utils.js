@@ -22,6 +22,20 @@ export function findValue(matrix, rows, cols, value)
     return [-1, -1];
 }
 
+// Precompute Manhattan heuristic cost
+export function calculateCost(rows, cols, end) {
+    let cost = Array.from({ length: rows }, () => Array(cols).fill(Infinity));
+
+    for (let row = 0; row < rows; row++) {
+        for (let col = 0; col < cols; col++) {
+            cost[row][col] = Math.abs(end[0] - row) + Math.abs(end[1] - col);
+        }
+    }
+
+    return cost;
+}
+
+
 export let matrix = 
 [
     [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1],

@@ -1,84 +1,9 @@
-function inMatrix(i, j, rows, cols) {
-    return i >= 0 && j >= 0 && i < rows && j < cols;
-}
+import {inMatrix, findValue, calculateCost, debugMatrix} from './utils.js';
+import {enqueue, dequeue} from './utils.js';
 
-function findValue(matrix, rows, cols, value) {
-    for (let i = 0; i < rows; i++) {
-        for (let j = 0; j < cols; j++) {
-            if (matrix[i][j] === value) {
-                return [i, j];
-            }
-        }
-    }
-    return [-1, -1];
-}
-
-// Binary Heap Functions (Priority Queue)
-function heapifyUp(heap, index) {
-    while (index > 0) {
-        let parentIndex = Math.floor((index - 1) / 2);
-        if (heap[parentIndex][1] <= heap[index][1]) break;
-        [heap[parentIndex], heap[index]] = [heap[index], heap[parentIndex]];
-        index = parentIndex;
-    }
-}
-
-function heapifyDown(heap, index) {
-    while (true) {
-        let left = 2 * index + 1;
-        let right = 2 * index + 2;
-        let smallest = index;
-
-        if (left < heap.length && heap[left][1] < heap[smallest][1]) smallest = left;
-        if (right < heap.length && heap[right][1] < heap[smallest][1]) smallest = right;
-
-        if (smallest === index) break;
-
-        [heap[index], heap[smallest]] = [heap[smallest], heap[index]];
-        index = smallest;
-    }
-}
-
-function enqueue(heap, value, priority) {
-    heap.push([value, priority]);
-    heapifyUp(heap, heap.length - 1);
-}
-
-function dequeue(heap) {
-    if (heap.length === 0) return null;
-    if (heap.length === 1) return heap.pop();
-    let min = heap[0];
-    heap[0] = heap.pop();
-    heapifyDown(heap, 0);
-    return min;
-}
-
-// Precompute Manhattan heuristic cost
-function calculateCost(rows, cols, end) {
-    let cost = Array.from({ length: rows }, () => Array(cols).fill(Infinity));
-
-    for (let row = 0; row < rows; row++) {
-        for (let col = 0; col < cols; col++) {
-            cost[row][col] = Math.abs(end[0] - row) + Math.abs(end[1] - col);
-        }
-    }
-
-    return cost;
-}
-
-function aStar() {
+export function aStar(matrix) {
     const dx = [0, 0, 1, -1];
     const dy = [1, -1, 0, 0];
-
-    let matrix = [
-        [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
-        [-1,  1,  0,  0,  0, -1,  0,  0, -2, -1],
-        [-1, -1, -1,  0, -1, -1,  0, -1, -1, -1],
-        [-1,  0,  0,  0,  0,  0,  0,  0,  0, -1],
-        [-1,  0, -1, -1, -1, -1, -1, -1,  0, -1],
-        [-1,  0,  0,  0,  0,  0,  0, -1,  0, -1],
-        [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
-    ];
 
     const rows = matrix.length;
     const cols = matrix[0].length;
