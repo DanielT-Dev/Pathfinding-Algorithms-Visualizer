@@ -58,7 +58,6 @@ const Pathfinding = () => {
 
     }
     console.log("[front-end] Algorithm started")
-    console.log(algorithm)
     algorithm.controls.start()
     console.log("[front-end] Algorithm finished successfully")
   };

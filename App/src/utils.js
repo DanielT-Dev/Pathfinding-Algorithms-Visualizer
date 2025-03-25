@@ -16,3 +16,9 @@ export const get_time_since = (start_date, current_date) => {
   return time_in_seconds;
 };
 
+export const color_element = (index, color) => {
+  const cellRef = document.querySelector(`[data-index='${index}']`);
+  if (cellRef) {
+      cellRef.style.background = color;
+  }
+};

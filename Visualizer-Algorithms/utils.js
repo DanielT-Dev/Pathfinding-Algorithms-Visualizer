@@ -36,7 +36,12 @@ export function calculateCost(rows, cols, end) {
 }
 
 
-export let matrix = 
+export let matrix = [
+    
+]
+
+
+export let debugMatrix = 
 [
     [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
     [-1, 1, 0, 0, 0, -1, 0, 0, -2, -1],

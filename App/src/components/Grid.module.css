@@ -1,7 +1,7 @@
 .grid {
     display: grid;
-    grid-template-columns: repeat(30, 1fr); /* 20 equal columns */
-    grid-template-rows: repeat(20, 1fr); /* 20 equal rows */
+    grid-template-columns: repeat(60, 1fr);
+    grid-template-rows: repeat(40, 1fr);
     gap: 1px; /* Small gap between cells */
     width: 100%;
     height: 50vh; /* Full viewport height */

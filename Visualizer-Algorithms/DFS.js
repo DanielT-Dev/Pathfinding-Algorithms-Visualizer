@@ -2,6 +2,10 @@ import {inMatrix, findValue, debugMatrix} from './utils.js';
 
 export function DFS(matrix)
 {
+    const changes = [
+
+    ]
+
     const dx = [0, 0, 1, -1];
     const dy = [1, -1, 0, 0]; 
 
@@ -27,17 +31,19 @@ export function DFS(matrix)
     let revisited = 0;
 
     st.push([start[0], start[1], 1]);
+    changes.push([start[0], start[1], 'in stack'])
     inStack++;
 
     while (st.length != 0)
     {
         [row, col, step] = st.pop();
+        changes.push([row, col, 'current'])
         inStack--;
 
         if (row == end[0] && col == end[1])
         {
-            console.table(matrix);
-            return;
+            //console.table(matrix);
+            return changes;
         }
 
         matrix[row][col] = step;
@@ -57,10 +63,15 @@ export function DFS(matrix)
                 visited++;
 
                 st.push([newRow, newCol, step + 1]);
+                changes.push([newRow, newCol, 'in stack'])
                 inStack++;
             }
         }
 
-        console.log("visited: " + visited + "\nrevisited: " + revisited + "\ninStack: " + inStack + "\n");
+        changes.push([row, col, 'visited'])
+
+        //console.log("visited: " + visited + "\nrevisited: " + revisited + "\ninStack: " + inStack + "\n");
     }
+
+    return changes;
 }
