@@ -5,6 +5,8 @@ import { get_events } from "../../../Visualizer-Algorithms/hold";
 
 import { color_element } from "../utils";
 
+export const cellMatrixReference = { current: [] }
+
 const Grid = () => {
   const rows = 40;
   const cols = 60;
@@ -14,6 +16,10 @@ const Grid = () => {
 
   const cellRefs = useRef([]);
   const isMouseDown = useRef(false);
+
+  useEffect(() => {
+    cellMatrixReference.current = cellRefs.current;
+  }, []);
 
   const [is_holding, set_is_holding] = useState(false);
 
@@ -57,14 +63,14 @@ const Grid = () => {
     <div className={styles.grid}>
       {cells.map((_, i) => (
         <>
-            <div
+          <div
             key={i}
             ref={(el) => (cellRefs.current[i] = el)}
             className={styles.cell}
             data-index={i + 1}
             onMouseDown={() => handleMouseDown(i)}
             onMouseEnter={() => handleMouseEnter(i)}
-            ></div>
+          ></div>
         </>
       ))}
     </div>

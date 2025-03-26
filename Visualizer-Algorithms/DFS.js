@@ -1,4 +1,4 @@
-import {inMatrix, findValue, debugMatrix} from './utils.js';
+import {inMatrix, findValue} from './utils.js';
 
 export function DFS(matrix)
 {

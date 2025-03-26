@@ -12,6 +12,10 @@ import SliderSpeed from './components/SliderSpeed';
 
 import { get_time_since } from './utils';
 
+import { cellMatrixReference } from './components/Grid';
+
+export let matrix
+
 const Pathfinding = () => {
 
   const [algorithm_name, set_algorithm_name] = useState(null)
@@ -32,7 +36,8 @@ const Pathfinding = () => {
   };
 
   const handleStart = () => {
-      
+    const rows = 40
+    const cols = 60
     set_is_running(true);
 
     if (logs.length === 0) {
@@ -58,6 +63,22 @@ const Pathfinding = () => {
 
     }
     console.log("[front-end] Algorithm started")
+
+    matrix = Array.from({ length: rows }, () => Array(cols).fill(0))
+
+    for (let i = 0; i < rows; i++)
+    {
+      for (let j = 0; j < cols; j++)
+      {
+          if (cellMatrixReference.current[(i * cols) + j].style.background == "rgb(30, 30, 30)")
+          {
+              matrix[i][j] = -1;
+          }
+      }
+    }
+
+    console.table(matrix);
+
     algorithm.controls.start()
     console.log("[front-end] Algorithm finished successfully")
   };
