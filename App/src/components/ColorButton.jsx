@@ -1,14 +1,22 @@
 import React, { useState } from 'react';
 import styles from './ColorButton.module.css';
 
-const ColorButton = ({ label, default_color, onColorChange }) => {
+const ColorButton = ({ label, default_color, onColorChange, index, set_relative_colors }) => {
   const [color, setColor] = useState(default_color);
 
   const handleColorChange = () => {
     const newColor = prompt('Enter new color', color);
     if (newColor) {
       setColor(newColor);
-      onColorChange(newColor);
+
+      set_relative_colors(prev => {
+        const updatedColors = [...prev];
+        updatedColors[index] = {
+          "label": updatedColors[index].label,
+          "color": newColor,
+        }
+        return updatedColors;
+      });
     }
   };
 

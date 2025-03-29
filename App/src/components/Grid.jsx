@@ -5,9 +5,14 @@ import { get_events } from "../../../Visualizer-Algorithms/hold";
 
 import { color_element } from "../utils";
 
+import { useColors } from "../contexts/ColorsContext";
+
 export const cellRefs = { current: []}
   
 const Grid = () => {
+
+  const { colors } = useColors();
+
   const rows = 40;
   const cols = 60;
   const [cells] = useState(
@@ -20,7 +25,7 @@ const Grid = () => {
 
   const handleCellClick = (index) => {
     console.log(index);
-    color_element(index, "rgb(30, 30, 30)");
+    color_element(index, colors[1].color);
   };
 
   const handleMouseDown = (index) => {

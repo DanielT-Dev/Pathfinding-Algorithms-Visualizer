@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from 'react';
 import './style.css';
 import "./scrollbar.css";
 
-import ColorButton from './components/ColorButton';
 import Grid from './components/Grid';
 import Dropdwon from './components/Dropdown';
 
@@ -14,12 +13,19 @@ import { DFS_DTO } from './data/algorithms';
 import SliderSpeed from './components/SliderSpeed';
 
 import { get_time_since } from './utils';
+
 import SelectColors from './components/SelectColors';
+import { useColors } from './contexts/ColorsContext';
 
 const Pathfinding = () => {
 
+  const { colors } = useColors();
+
+  const [dfs_task, set_dfs_task] = useState(DFS_DTO(colors));
+  const [lee_task, set_lee_task] = useState(Lee_DTO(colors));
+
   const [algorithm_name, set_algorithm_name] = useState(null)
-  const [algorithm, setAlgorithm] = useState(Lee_DTO);
+  const [algorithm, setAlgorithm] = useState(dfs_task);
   const [is_running, set_is_running] = useState(false);
 
   const [logs, setLogs] = useState([]);
@@ -133,6 +139,13 @@ const Pathfinding = () => {
       return "rgb(255, 170, 50)";
   }
 
+  const assign_algorithm = (algorithm_name) => {
+    if (algorithm_name == 'DFS')
+      setAlgorithm(dfs_task)
+    if (algorithm_name == 'Lee')
+      setAlgorithm(lee_task)
+  }
+
   useEffect(() => {
     //console.log('Logs changed:', logs);
   }, [logs]);
@@ -145,12 +158,28 @@ const Pathfinding = () => {
     handleReset()
     set_is_running(false)
 
-    if (algorithm_name == 'DFS')
-      setAlgorithm(DFS_DTO)
-    if (algorithm_name == 'Lee')
-      setAlgorithm(Lee_DTO)
+    assign_algorithm(algorithm_name)
     
   }, [algorithm_name])
+  
+
+  useEffect(() => {
+    const updatedDfsTask = DFS_DTO(colors);
+    const updatedLeeTask = Lee_DTO(colors);
+
+    set_dfs_task(updatedDfsTask);
+    set_lee_task(updatedLeeTask);
+
+  }, [colors]);
+
+  useEffect(() => {
+    if (dfs_task && lee_task) {
+      console.log("DFS Task:", dfs_task);
+      console.log("Lee Task:", lee_task);
+
+      assign_algorithm(algorithm_name)
+    }
+  }, [dfs_task, lee_task]);
 
   return (
     <div className="main_container">
