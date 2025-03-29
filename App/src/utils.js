@@ -23,7 +23,6 @@ export const color_element = (index, color) => {
   }
 };
 
-
 export const buildMatrix = (cellRefs) => {
   const rows = 40
   const cols = 60
@@ -39,6 +38,20 @@ export const buildMatrix = (cellRefs) => {
 
   matrix[0][0] = 1;
   matrix[rows - 1][cols - 1] = -2;
-  
+
   return matrix;
 };
+
+export async function colorMatrix(changes) {
+  for (const [i, j, state] of changes) {
+    await new Promise(resolve => setTimeout(resolve, 10)); // Wait 1 second before next change
+
+    if (state === "in stack") {
+      color_element(i * 60 + j, 'yellow');
+    } else if (state === "current") {
+      color_element(i * 60 + j, 'red');
+    } else {
+      color_element(i * 60 + j, 'green');
+    }
+  }
+}

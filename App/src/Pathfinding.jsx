@@ -18,7 +18,7 @@ import { get_time_since } from './utils';
 const Pathfinding = () => {
 
   const [algorithm_name, set_algorithm_name] = useState(null)
-  const [algorithm, setAlgorithm] = useState(DFS_DTO);
+  const [algorithm, setAlgorithm] = useState(Lee_DTO);
   const [is_running, set_is_running] = useState(false);
 
   const [logs, setLogs] = useState([]);

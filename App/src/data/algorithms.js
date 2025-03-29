@@ -1,4 +1,5 @@
 import { DFS } from "../../../Visualizer-Algorithms/DFS"
+import { colorMatrix } from "../utils"
 
 export const DFS_DTO = {
     name: "DFS",
@@ -32,12 +33,7 @@ export const DFS_DTO = {
             console.log("[back-end] Starting task DFS")
             let changes = DFS(matrix)
 
-            changes.map((change, index) => {
-                let i = change[0]
-                let j = change[1]
-                let state = change[2]
-                color_element(i * 60 + j - 1, 'yellow')
-            })
+            colorMatrix(changes)
 
             console.log("[back-end] Task DFS finished with 0 errors")
         }
@@ -78,7 +74,9 @@ export const Lee_DTO = {
     controls: {
         start: (matrix) => {
             console.log("[back-end] Starting task Lee")
-            Lee(matrix)
+            const changes = Lee(matrix)
+
+            colorMatrix(changes)
             console.log("[back-end] Task Lee finished with 0 errors")
         }
     },
