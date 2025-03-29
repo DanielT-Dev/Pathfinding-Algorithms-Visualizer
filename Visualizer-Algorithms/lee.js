@@ -1,9 +1,13 @@
-import {inMatrix, findValue, debugMatrix} from './utils.js';
+import {inMatrix, findValue} from './utils.js';
 
 export function Lee(matrix)
 {
     const dx = [0, 0, 1, -1];
     const dy = [1, -1, 0, 0];
+
+    let changes = [
+
+    ]
 
     const rows = matrix.length;
     const cols = matrix[0].length;
@@ -24,18 +28,20 @@ export function Lee(matrix)
     let inQueue = 0;
 
     queue.push(start);
+    changes.push([start[0], start[1], 'in stack'])
 
     inQueue++;
 
     while (queue.length != 0)
     {
         let [row, col] = queue.shift();
+        changes.push([row, col, 'current'])
         inQueue--;
         
         if (row == end[0] && col == end[1])
         {
             console.table(matrix);
-            return;
+            return changes;
         }
 
         for (let d = 0; d <= 3; d++)
@@ -54,12 +60,16 @@ export function Lee(matrix)
                 
                 matrix[newRow][newCol] = matrix[row][col] + 1;
                 queue.push([newRow, newCol]);
+                changes.push([newRow, newCol, 'in stack'])
                 inQueue++;
             }
         }
+
+        changes.push([row, col, 'visited'])
         
         console.log("visited: " + visited + "\nrevisited: " + revisited + "\ninQueue: " + inQueue + "\n");
     }
 
     console.log("Not found!\n");
+    return changes;
 }

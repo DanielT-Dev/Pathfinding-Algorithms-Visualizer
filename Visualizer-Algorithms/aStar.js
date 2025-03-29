@@ -1,4 +1,4 @@
-import {inMatrix, findValue, calculateCost, debugMatrix} from './utils.js';
+import {inMatrix, findValue, calculateCost} from './utils.js';
 import {enqueue, dequeue} from './utils.js';
 
 export function aStar(matrix) {

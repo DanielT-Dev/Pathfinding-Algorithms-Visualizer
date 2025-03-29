@@ -6,8 +6,8 @@ export function DFS(matrix)
 
     ]
 
-    const dx = [0, 0, 1, -1];
-    const dy = [1, -1, 0, 0]; 
+    const dx = [0, 1, 0, -1];
+    const dy = [1, 0, -1, 0]; 
 
     const rows = matrix.length;
     const cols = matrix[0].length;
@@ -42,7 +42,7 @@ export function DFS(matrix)
 
         if (row == end[0] && col == end[1])
         {
-            //console.table(matrix);
+            console.table(matrix);
             return changes;
         }
 
@@ -53,7 +53,7 @@ export function DFS(matrix)
             let newRow = row + dx[d];
             let newCol = col + dy[d];
 
-            if (inMatrix(newRow, newCol, rows, cols) && (matrix[newRow][newCol] == 0 || matrix[newRow][newCol] == -2 || step + 1 < matrix[newRow][newCol]))
+            if (inMatrix(newRow, newCol, rows, cols) && matrix[newRow][newCol] != -1 && (matrix[newRow][newCol] == 0 || matrix[newRow][newCol] == -2))
             {
                 // Telemetry
                 if (matrix[newRow][newCol] != 0)
