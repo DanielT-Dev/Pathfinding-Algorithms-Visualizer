@@ -6,7 +6,7 @@ import ColorButton from './components/ColorButton';
 import Grid from './components/Grid';
 import Dropdwon from './components/Dropdown';
 
-import { buildMatrix } from './utils';
+import { buildMatrix, pause_algorithm, resume_algorithm } from './utils';
 import { cellRefs } from './components/Grid';
 
 import { Lee_DTO } from './data/algorithms';
@@ -14,6 +14,7 @@ import { DFS_DTO } from './data/algorithms';
 import SliderSpeed from './components/SliderSpeed';
 
 import { get_time_since } from './utils';
+import SelectColors from './components/SelectColors';
 
 const Pathfinding = () => {
 
@@ -43,6 +44,15 @@ const Pathfinding = () => {
       setLogs(newLogs);
       setTimestamps(newTimestamps);
       updateLogsAndTimestamps(newLogs, newTimestamps);
+
+      console.log("[front-end] Algorithm started")
+
+      const matrix = buildMatrix(cellRefs);
+      console.table(matrix);
+
+
+      algorithm.controls.start(matrix)
+      console.log("[front-end] Algorithm finished successfully")
     } else {
       const start_time = timestamps[0].timestamp;
       const current_time = new Date();
@@ -58,16 +68,8 @@ const Pathfinding = () => {
       setTimestamps(newTimestamps);
       updateLogsAndTimestamps(newLogs, newTimestamps);
 
+      resume_algorithm();
     }
-    
-    console.log("[front-end] Algorithm started")
-
-    const matrix = buildMatrix(cellRefs);
-    console.table(matrix);
-
-
-    algorithm.controls.start(matrix)
-    console.log("[front-end] Algorithm finished successfully")
   };
 
   const handleStop = () => {
@@ -108,7 +110,7 @@ const Pathfinding = () => {
     setTimestamps(newTimestamps);
     updateLogsAndTimestamps(newLogs, newTimestamps);
 
-    
+    pause_algorithm();
   }
 
   const handleReset = () => {
@@ -159,18 +161,8 @@ const Pathfinding = () => {
         <Dropdwon set_algorithm_name={set_algorithm_name} disabled={is_running} />
       </div>
 
-      <div className="select_colors">
-        {
-          algorithm.colors.map((color, index) => {
-            return <ColorButton
-              key={index}
-              label={color.label}
-              default_color={color.color}
-              onClick={() => handleColorChange(startColor, setStartColor)}
-            />
-          })
-        }
-      </div>
+      
+      <SelectColors algorithm={algorithm} />
 
       <div className="select_speed">
         <SliderSpeed speeds={algorithm.speeds}/>

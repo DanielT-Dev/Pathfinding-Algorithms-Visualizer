@@ -16,7 +16,10 @@
 }
 
 .colorButtonWrapper {
-    padding-right: 2vw;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    padding-left: 2vh;
+    padding-right: 2vh;
     display: flex;
     flex-direction: column;
 }

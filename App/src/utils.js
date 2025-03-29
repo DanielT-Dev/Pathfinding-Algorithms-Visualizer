@@ -42,6 +42,18 @@ export const buildMatrix = (cellRefs) => {
   return matrix;
 };
 
+let isPaused = false;
+
+// Pause the algorithm
+export const pause_algorithm = () => {
+  isPaused = true;
+};
+
+// Resume the algorithm
+export const resume_algorithm = () => {
+  isPaused = false;
+};
+
 export async function colorMatrix(changes) {
 
   // While queue of changes is NOT empty
@@ -49,6 +61,10 @@ export async function colorMatrix(changes) {
 
     // Get first element + Remove first element
     let [i, j, state] = changes.dequeue();
+
+    while (isPaused) {
+      await new Promise(resolve => setTimeout(resolve, 100)); // Wait 100ms to check again
+    }
 
     await new Promise(resolve => setTimeout(resolve, 10)); // Wait 1 second before next change
 
@@ -60,11 +76,4 @@ export async function colorMatrix(changes) {
       color_element(i * 60 + j, 'green');
     }
   }
-}
-
-export const pause_algorithm = () => {
-
-
-
-  return changes_left
 }
