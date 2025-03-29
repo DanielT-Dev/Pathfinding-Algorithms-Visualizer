@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import ColorButton from './ColorButton'
+import { useColors } from '../hooks/colorsState';
 
 const SelectColors = ({ algorithm }) => {
 
   const [selected_button, set_selected_button] = useState(null);
+
+  const { colors, setColors } = useColors();
 
   useEffect(() => {
      
@@ -16,7 +19,6 @@ const SelectColors = ({ algorithm }) => {
             return <div 
                 key={index}
                 onClick={() => {
-                  console.log("yes")
                   set_selected_button(index)
                 }}
                 className={selected_button === index ? 'selected_color_button' : ''}

@@ -1,6 +1,10 @@
 import { DFS } from "../../../Visualizer-Algorithms/DFS"
+
 import { colorMatrix } from "../utils"
+
 import Queue from "../structures/Queue"
+
+const { colors, setColors } = useColors();
 
 export const DFS_DTO = {
     name: "DFS",
@@ -47,6 +51,7 @@ export const DFS_DTO = {
 
 import { Lee } from "../../../Visualizer-Algorithms/lee"
 import { color_element } from "../utils"
+import { useColors } from "../hooks/colorsState";
 
 export const Lee_DTO = {
     name: "Lee",
