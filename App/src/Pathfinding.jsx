@@ -107,6 +107,8 @@ const Pathfinding = () => {
     setLogs(newLogs);
     setTimestamps(newTimestamps);
     updateLogsAndTimestamps(newLogs, newTimestamps);
+
+    
   }
 
   const handleReset = () => {
@@ -136,6 +138,7 @@ const Pathfinding = () => {
   useEffect(() => {
     //console.log('Timestamps changed:', timestamps);
   }, [timestamps]);
+
   useEffect(() => {
     handleReset()
     set_is_running(false)

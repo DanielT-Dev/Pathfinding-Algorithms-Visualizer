@@ -1,5 +1,6 @@
 import { DFS } from "../../../Visualizer-Algorithms/DFS"
 import { colorMatrix } from "../utils"
+import Queue from "../structures/Queue"
 
 export const DFS_DTO = {
     name: "DFS",
@@ -31,9 +32,12 @@ export const DFS_DTO = {
     controls: {
         start: (matrix) => {
             console.log("[back-end] Starting task DFS")
+
             let changes = DFS(matrix)
 
-            colorMatrix(changes)
+            let changes_queue = new Queue(changes);
+
+            colorMatrix(changes_queue)
 
             console.log("[back-end] Task DFS finished with 0 errors")
         }

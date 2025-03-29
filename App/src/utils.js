@@ -43,7 +43,13 @@ export const buildMatrix = (cellRefs) => {
 };
 
 export async function colorMatrix(changes) {
-  for (const [i, j, state] of changes) {
+
+  // While queue of changes is NOT empty
+  while(changes.isEmpty() == false) {
+
+    // Get first element + Remove first element
+    let [i, j, state] = changes.dequeue();
+
     await new Promise(resolve => setTimeout(resolve, 10)); // Wait 1 second before next change
 
     if (state === "in stack") {
@@ -54,4 +60,11 @@ export async function colorMatrix(changes) {
       color_element(i * 60 + j, 'green');
     }
   }
+}
+
+export const pause_algorithm = () => {
+
+
+
+  return changes_left
 }
