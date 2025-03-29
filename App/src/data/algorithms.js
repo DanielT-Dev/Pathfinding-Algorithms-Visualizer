@@ -1,5 +1,3 @@
-import { matrix } from "../../../Visualizer-Algorithms/utils"
-
 import { DFS } from "../../../Visualizer-Algorithms/DFS"
 
 export const DFS_DTO = {
@@ -30,7 +28,7 @@ export const DFS_DTO = {
     ] ,
     speeds: [0.1, 0.25, 0.5, 0.75, 1, 2, 3, 4, 8, 9, 10],
     controls: {
-        start: () => {
+        start: (matrix) => {
             console.log("[back-end] Starting task DFS")
             let changes = DFS(matrix)
 
@@ -44,7 +42,6 @@ export const DFS_DTO = {
             console.log("[back-end] Task DFS finished with 0 errors")
         }
     },
-    input: matrix,
     code: DFS,
 }
 
@@ -79,12 +76,11 @@ export const Lee_DTO = {
     ] ,
     speeds: [0.1, 0.25, 0.5, 0.75, 1, 2, 3, 4, 8, 9, 10],
     controls: {
-        start: () => {
+        start: (matrix) => {
             console.log("[back-end] Starting task Lee")
             Lee(matrix)
             console.log("[back-end] Task Lee finished with 0 errors")
         }
     },
-    input: matrix,
     code: Lee,
 }

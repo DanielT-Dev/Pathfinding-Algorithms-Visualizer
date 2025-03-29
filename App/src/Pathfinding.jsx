@@ -6,15 +6,14 @@ import ColorButton from './components/ColorButton';
 import Grid from './components/Grid';
 import Dropdwon from './components/Dropdown';
 
+import { buildMatrix } from './utils';
+import { cellRefs } from './components/Grid';
+
 import { Lee_DTO } from './data/algorithms';
 import { DFS_DTO } from './data/algorithms';
 import SliderSpeed from './components/SliderSpeed';
 
 import { get_time_since } from './utils';
-
-import { cellMatrixReference } from './components/Grid';
-
-export let matrix
 
 const Pathfinding = () => {
 
@@ -36,8 +35,6 @@ const Pathfinding = () => {
   };
 
   const handleStart = () => {
-    const rows = 40
-    const cols = 60
     set_is_running(true);
 
     if (logs.length === 0) {
@@ -62,24 +59,14 @@ const Pathfinding = () => {
       updateLogsAndTimestamps(newLogs, newTimestamps);
 
     }
+    
     console.log("[front-end] Algorithm started")
 
-    matrix = Array.from({ length: rows }, () => Array(cols).fill(0))
-
-    for (let i = 0; i < rows; i++)
-    {
-      for (let j = 0; j < cols; j++)
-      {
-          if (cellMatrixReference.current[(i * cols) + j].style.background == "rgb(30, 30, 30)")
-          {
-              matrix[i][j] = -1;
-          }
-      }
-    }
-
+    const matrix = buildMatrix(cellRefs);
     console.table(matrix);
 
-    algorithm.controls.start()
+
+    algorithm.controls.start(matrix)
     console.log("[front-end] Algorithm finished successfully")
   };
 

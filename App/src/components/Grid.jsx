@@ -5,8 +5,8 @@ import { get_events } from "../../../Visualizer-Algorithms/hold";
 
 import { color_element } from "../utils";
 
-export const cellMatrixReference = { current: [] }
-
+export const cellRefs = { current: []}
+  
 const Grid = () => {
   const rows = 40;
   const cols = 60;
@@ -14,12 +14,7 @@ const Grid = () => {
     Array.from({ length: rows * cols })
   );
 
-  const cellRefs = useRef([]);
   const isMouseDown = useRef(false);
-
-  useEffect(() => {
-    cellMatrixReference.current = cellRefs.current;
-  }, []);
 
   const [is_holding, set_is_holding] = useState(false);
 
@@ -31,7 +26,7 @@ const Grid = () => {
   const handleMouseDown = (index) => {
     isMouseDown.current = true;
     console.log("de la handleMouseDown...")
-    handleCellClick(index + 1);
+    handleCellClick(index);
   };
 
   const handleMouseUp = () => {
@@ -48,12 +43,6 @@ const Grid = () => {
     get_events(set_is_holding);
   }, [])
 
-  /*
-  useEffect(() => {
-    handleCellClick()
-  }, [is_holding])
-  */
-
   useEffect(() => {
     document.addEventListener("mouseup", handleMouseUp);
     return () => document.removeEventListener("mouseup", handleMouseUp);
@@ -67,7 +56,7 @@ const Grid = () => {
             key={i}
             ref={(el) => (cellRefs.current[i] = el)}
             className={styles.cell}
-            data-index={i + 1}
+            data-index={i}
             onMouseDown={() => handleMouseDown(i)}
             onMouseEnter={() => handleMouseEnter(i)}
           ></div>
