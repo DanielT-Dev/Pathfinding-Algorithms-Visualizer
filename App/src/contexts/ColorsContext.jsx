@@ -17,8 +17,7 @@ export const ColorsProvider = ({ children }) => {
     };
 
     useEffect(() => {
-      console.log("Change in context detected: ")
-      colors.map(color => {console.log(color.label + " " + color.color)});
+      //colors.map(color => {console.log(color.label + " " + color.color)});
     }, [colors])
 
     return (

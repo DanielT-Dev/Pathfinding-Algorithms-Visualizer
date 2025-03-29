@@ -24,7 +24,6 @@ const Grid = () => {
   const [is_holding, set_is_holding] = useState(false);
 
   const handleCellClick = (index) => {
-    console.log(index);
     color_element(index, colors[1].color);
   };
 

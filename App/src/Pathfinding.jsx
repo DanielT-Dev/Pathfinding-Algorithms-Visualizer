@@ -5,10 +5,10 @@ import "./scrollbar.css";
 import Grid from './components/Grid';
 import Dropdwon from './components/Dropdown';
 
-import { buildMatrix, pause_algorithm, resume_algorithm } from './utils';
+import { buildMatrix, clearMatrix, pause_algorithm, reset_algorithm, resume_algorithm } from './utils';
 import { cellRefs } from './components/Grid';
 
-import { Lee_DTO } from './data/algorithms';
+import { BFS_DTO } from './data/algorithms';
 import { DFS_DTO } from './data/algorithms';
 import SliderSpeed from './components/SliderSpeed';
 
@@ -22,7 +22,7 @@ const Pathfinding = () => {
   const { colors } = useColors();
 
   const [dfs_task, set_dfs_task] = useState(DFS_DTO(colors));
-  const [lee_task, set_lee_task] = useState(Lee_DTO(colors));
+  const [bfs_task, set_bfs_task] = useState(BFS_DTO(colors));
 
   const [algorithm_name, set_algorithm_name] = useState(null)
   const [algorithm, setAlgorithm] = useState(dfs_task);
@@ -53,9 +53,7 @@ const Pathfinding = () => {
 
       console.log("[front-end] Algorithm started")
 
-      const matrix = buildMatrix(cellRefs);
-      console.table(matrix);
-
+      const matrix = buildMatrix(cellRefs, colors);
 
       algorithm.controls.start(matrix)
       console.log("[front-end] Algorithm finished successfully")
@@ -77,24 +75,6 @@ const Pathfinding = () => {
       resume_algorithm();
     }
   };
-
-  const handleStop = () => {
-    set_is_running(false);
-
-    const newLogs = [...logs, "Stopped."];
-    const start_time = timestamps[0].timestamp;
-    const current_time = new Date();
-    const time_diff = get_time_since(start_time, current_time);
-
-    const newTimestamps = [
-      ...timestamps,
-      { timestamp: current_time, value: time_diff },
-    ];
-
-    setLogs(newLogs);
-    setTimestamps(newTimestamps);
-    updateLogsAndTimestamps(newLogs, newTimestamps);
-  }
 
   const handlePause = () => {
     set_is_running(false);
@@ -119,8 +99,15 @@ const Pathfinding = () => {
     pause_algorithm();
   }
 
-  const handleReset = () => {
+  const handleReset = async (new_signal) => {
     set_is_running(false);
+
+    reset_algorithm(new_signal)
+
+    if (new_signal == true) {
+      await new Promise(resolve => setTimeout(resolve, 100));
+      clearMatrix(cellRefs)
+    }
 
     const newLogs = [];
     const newTimestamps = [];
@@ -128,6 +115,8 @@ const Pathfinding = () => {
     setLogs(newLogs);
     setTimestamps(newTimestamps);
     updateLogsAndTimestamps(newLogs, newTimestamps);
+
+    
   }
 
   const assign_color = (log) => {
@@ -142,8 +131,8 @@ const Pathfinding = () => {
   const assign_algorithm = (algorithm_name) => {
     if (algorithm_name == 'DFS')
       setAlgorithm(dfs_task)
-    if (algorithm_name == 'Lee')
-      setAlgorithm(lee_task)
+    if (algorithm_name == 'BFS')
+      setAlgorithm(bfs_task)
   }
 
   useEffect(() => {
@@ -155,7 +144,7 @@ const Pathfinding = () => {
   }, [timestamps]);
 
   useEffect(() => {
-    handleReset()
+    handleReset(false)
     set_is_running(false)
 
     assign_algorithm(algorithm_name)
@@ -165,21 +154,18 @@ const Pathfinding = () => {
 
   useEffect(() => {
     const updatedDfsTask = DFS_DTO(colors);
-    const updatedLeeTask = Lee_DTO(colors);
+    const updatedBfsTask = BFS_DTO(colors);
 
     set_dfs_task(updatedDfsTask);
-    set_lee_task(updatedLeeTask);
+    set_bfs_task(updatedBfsTask);
 
   }, [colors]);
 
   useEffect(() => {
-    if (dfs_task && lee_task) {
-      console.log("DFS Task:", dfs_task);
-      console.log("Lee Task:", lee_task);
-
+    if (dfs_task && bfs_task) {
       assign_algorithm(algorithm_name)
     }
-  }, [dfs_task, lee_task]);
+  }, [dfs_task, bfs_task]);
 
   return (
     <div className="main_container">
@@ -206,15 +192,11 @@ const Pathfinding = () => {
         }
         {
           is_running == true &&
-          <button onClick={handleStop}>
-            <img src="controls3.png" alt="Control 3" />
-          </button>
-        }
-        
-        <button onClick={handlePause}>
+          <button onClick={handlePause}>
           <img src="controls2.png" alt="Control 2" />
         </button>
-        <button onClick={handleReset}>
+        }
+        <button onClick={() => handleReset(true)}>
           <img src="controls4.png" alt="Control 4" />
         </button>
       </div>

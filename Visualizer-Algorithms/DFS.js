@@ -42,7 +42,6 @@ export function DFS(matrix)
 
         if (row == end[0] && col == end[1])
         {
-            console.table(matrix);
             return changes;
         }
 

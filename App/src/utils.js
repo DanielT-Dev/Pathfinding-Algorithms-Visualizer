@@ -23,15 +23,21 @@ export const color_element = (index, color) => {
   }
 };
 
-export const buildMatrix = (cellRefs) => {
+export const buildMatrix = (cellRefs, colors) => {
+
+  const wall_color = colors.filter(color => color.label == 'Wall')[0].color;
+
   const rows = 40
   const cols = 60
   let matrix = Array.from({ length: rows }, () => Array(cols).fill(0))
 
   for (let i = 0; i < rows; i++) {
     for (let j = 0; j < cols; j++) {
-      if (cellRefs.current[(i * cols) + j].style.background == "rgb(30, 30, 30)") {
+      if (cellRefs.current[(i * cols) + j].style.background == wall_color) {
         matrix[i][j] = -1;
+      }
+      else {
+        matrix[i][j] = 0;
       }
     }
   }
@@ -43,6 +49,7 @@ export const buildMatrix = (cellRefs) => {
 };
 
 let isPaused = false;
+let reset_signal = false;
 
 // Pause the algorithm
 export const pause_algorithm = () => {
@@ -54,13 +61,28 @@ export const resume_algorithm = () => {
   isPaused = false;
 };
 
+export const reset_algorithm = (new_signal) => {
+  reset_signal = new_signal
+}
+
 export async function colorMatrix(changes) {
+
+  reset_signal = false
 
   // While queue of changes is NOT empty
   while(changes.isEmpty() == false) {
 
+    console.log("DA 1");
+
     // Get first element + Remove first element
     let [i, j, state] = changes.dequeue();
+
+    if (reset_signal == true) {
+      reset_signal = false
+      return;
+    }
+
+    console.log("DA 2");
 
     while (isPaused) {
       await new Promise(resolve => setTimeout(resolve, 100)); // Wait 100ms to check again
@@ -74,6 +96,20 @@ export async function colorMatrix(changes) {
       color_element(i * 60 + j, 'red');
     } else {
       color_element(i * 60 + j, 'green');
+    }
+  }
+}
+
+export function clearMatrix(cellRefs)
+{
+  const rows = 40
+  const cols = 60
+
+  for (let i = 0; i < rows; i++)
+  {
+    for (let j = 0; j < cols; j++)
+    {
+      cellRefs.current[i * cols + j].style.background = "rgb(240, 240, 240)";
     }
   }
 }
