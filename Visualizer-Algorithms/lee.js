@@ -1,4 +1,5 @@
 import {inMatrix, findValue} from './utils.js';
+import Queue from '../App/src/structures/Queue.js';
 
 export function Lee(matrix)
 {
@@ -6,7 +7,7 @@ export function Lee(matrix)
     const dy = [1, -1, 0, 0];
 
     let changes = [
-
+        
     ]
 
     const rows = matrix.length;
@@ -21,20 +22,20 @@ export function Lee(matrix)
         return;
     }
 
-    let queue = [];
+    let queue = new Queue()
     
     let visited = 0;
     let revisited = 0;
     let inQueue = 0;
 
-    queue.push(start);
+    queue.enqueue(start);
     changes.push([start[0], start[1], 'in stack'])
 
     inQueue++;
 
     while (queue.length != 0)
     {
-        let [row, col] = queue.shift();
+        let [row, col] = queue.dequeue();
         changes.push([row, col, 'current'])
         inQueue--;
         
@@ -59,15 +60,13 @@ export function Lee(matrix)
                 visited++;
                 
                 matrix[newRow][newCol] = matrix[row][col] + 1;
-                queue.push([newRow, newCol]);
+                queue.enqueue([newRow, newCol]);
                 changes.push([newRow, newCol, 'in stack'])
                 inQueue++;
             }
         }
 
         changes.push([row, col, 'visited'])
-        
-        console.log("visited: " + visited + "\nrevisited: " + revisited + "\ninQueue: " + inQueue + "\n");
     }
 
     console.log("Not found!\n");

@@ -69,8 +69,6 @@ export function DFS(matrix)
         }
 
         changes.push([row, col, 'visited'])
-
-        //console.log("visited: " + visited + "\nrevisited: " + revisited + "\ninStack: " + inStack + "\n");
     }
 
     return changes;
