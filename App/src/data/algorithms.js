@@ -33,7 +33,7 @@ export const BFS_DTO = (colors) => { return {
     colors: colors,
     speeds: [0.1, 0.25, 0.5, 0.75, 1, 2, 3, 4, 8, 9, 10],
     controls: {
-        start: (matrix) => {
+        start: async (matrix) => {
 
             console.log("[back-end] Starting task BFS")
 
@@ -41,7 +41,7 @@ export const BFS_DTO = (colors) => { return {
 
             let changes_queue = new Queue(changes);
 
-            colorMatrix(changes_queue)
+            await colorMatrix(changes_queue)
             console.log("[back-end] Task BFS finished with 0 errors")
         }
     },
