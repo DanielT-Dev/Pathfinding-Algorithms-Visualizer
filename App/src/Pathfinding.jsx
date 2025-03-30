@@ -169,70 +169,70 @@ const Pathfinding = () => {
 
   return (
     <div className="main_container">
-    <h1 className="title">Pathfinding Algorithms Visualizer</h1>
+      <h1 className="title">Pathfinding Algorithms Visualizer</h1>
 
-    <div className="settings">
-      <div className="select_algorithm">
-        <Dropdwon set_algorithm_name={set_algorithm_name} disabled={is_running} />
-      </div>
+      <div className="settings">
+        <div className="select_algorithm">
+          <Dropdwon set_algorithm_name={set_algorithm_name} disabled={is_running} />
+        </div>
 
-      
-      <SelectColors algorithm={algorithm} />
+        
+        <SelectColors algorithm={algorithm} />
 
-      <div className="select_speed">
-        <SliderSpeed speeds={algorithm.speeds}/>
-      </div>
+        <div className="select_speed">
+          <SliderSpeed speeds={algorithm.speeds}/>
+        </div>
 
-      <div className="controls">
-        {
-          is_running == false &&
-          <button onClick={handleStart}>
-            <img src="controls1.png" alt="Control 1" />
-          </button>
-        }
-        {
-          is_running == true &&
-          <button onClick={handlePause}>
-          <img src="controls2.png" alt="Control 2" />
-        </button>
-        }
-        <button onClick={() => handleReset(true)}>
-          <img src="controls4.png" alt="Control 4" />
-        </button>
-      </div>
-    </div>
-
-    <div style={{ display: 'flex', flexDirection: 'row' }}>
-      <div className="visualizer">
-        <Grid/>
-      </div>
-
-      <div className="live_stats">
-        <div>
-          <h6>Command Logs</h6>
-          <div className="logs scrollbar">
+        <div className="controls">
           {
-            logs.map((log, index) => {
-              return (
-                <p 
-                key={index}
-                style={{
-                  color: assign_color(log),
-                  fontWeight: 600,
-                }}
-              >
-               [{timestamps[index].value}] - {log}
-              </p>
-              )}
-            )
+            is_running == false &&
+            <button onClick={handleStart}>
+              <img src="controls1.png" alt="Control 1" />
+            </button>
           }
+          {
+            is_running == true &&
+            <button onClick={handlePause}>
+            <img src="controls2.png" alt="Control 2" />
+          </button>
+          }
+          <button onClick={() => handleReset(true)}>
+            <img src="controls4.png" alt="Control 4" />
+          </button>
+        </div>
+      </div>
+
+      <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <div className="visualizer">
+          <Grid/>
+        </div>
+
+        <div className="live_stats">
+          <div>
+            <h6>Command Logs</h6>
+            <div className="logs scrollbar">
+            {
+              logs.map((log, index) => {
+                return (
+                  <p 
+                  key={index}
+                  style={{
+                    color: assign_color(log),
+                    fontWeight: 600,
+                  }}
+                >
+                [{timestamps[index].value}] - {log}
+                </p>
+                )}
+              )
+            }
+            </div>
+          </div>
+          <div>
+            <h6>Live Stats</h6>
           </div>
         </div>
-        <div>
-          <h6>Live Stats</h6>
-        </div>
       </div>
-    </div>
 
     <div className="other">
       <p>Other things about the algorithm.....</p>

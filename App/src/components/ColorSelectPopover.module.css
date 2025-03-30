@@ -1,0 +1,11 @@
+.container {
+    width: 19vw;
+    height: 10vh;
+    background-color: rgb(245, 245, 245);
+    border: 1px solid rgb(220, 220, 220);
+    border-radius: 20px;
+    position: absolute;
+}
+.container:hover {
+    background-color: rgb(245, 245, 245);
+}
