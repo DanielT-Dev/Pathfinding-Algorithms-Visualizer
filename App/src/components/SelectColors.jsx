@@ -4,8 +4,9 @@ import ColorButton from './ColorButton'
 
 import { useColors } from "../contexts/ColorsContext";
 import ColorSelectPopover from './ColorSelectPopover';
+import { unpack_colors } from '../utils';
 
-const SelectColors = ({ algorithm }) => {
+const SelectColors = ({ algorithm, set_selected_type }) => {
 
   const [selected_button, set_selected_button] = useState(null);
 
@@ -15,27 +16,10 @@ const SelectColors = ({ algorithm }) => {
 
   const [popover_is_open, set_popover_is_open] = useState(false);
 
-  const popoverRef = useRef(null)
-
   useEffect(() => {
      changeColors(relative_colors)
+     unpack_colors(relative_colors)
   }, [relative_colors])
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (popoverRef.current && !popoverRef.current.contains(event.target)) {
-        set_popover_is_open(false)
-      }
-    };
-
-    if (popover_is_open) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [popover_is_open])
 
   return (
     <div className="select_colors">
@@ -44,7 +28,8 @@ const SelectColors = ({ algorithm }) => {
             return <div 
                 key={index}
                 onClick={() => {
-                  set_selected_button(index)
+                  set_selected_button(index);
+                  set_selected_type(index);
                 }}
                 className={selected_button === index ? 'selected_color_button' : ''}
               >

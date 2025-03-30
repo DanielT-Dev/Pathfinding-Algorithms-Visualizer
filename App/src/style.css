@@ -57,7 +57,7 @@ h1 {
     margin-left: 8%;
     margin-top: 1vh;
     width: 66%;
-    height: 50vh;
+    height: 75vh;
     background-color: white;
     border: 2px solid rgb(200, 200, 200);
 }
@@ -100,7 +100,7 @@ h1 {
     display: flex;
     flex-direction: column;
     width: 11.5vw;
-    height: 50vh;
+    height: 75vh;
     background-color: white;
     border-top: 2px solid rgb(200, 200, 200);
     border-right: 2px solid rgb(200, 200, 200);

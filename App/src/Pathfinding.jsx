@@ -20,6 +20,8 @@ import { useColors } from './contexts/ColorsContext';
 const Pathfinding = () => {
 
   const { colors } = useColors();
+  // Wall element type selected by default
+  const [selected_type, set_selected_type] = useState(1);
 
   const [dfs_task, set_dfs_task] = useState(DFS_DTO(colors));
   const [bfs_task, set_bfs_task] = useState(BFS_DTO(colors));
@@ -177,7 +179,7 @@ const Pathfinding = () => {
         </div>
 
         
-        <SelectColors algorithm={algorithm} />
+        <SelectColors algorithm={algorithm} set_selected_type={set_selected_type}/>
 
         <div className="select_speed">
           <SliderSpeed speeds={algorithm.speeds}/>
@@ -204,7 +206,7 @@ const Pathfinding = () => {
 
       <div style={{ display: 'flex', flexDirection: 'row' }}>
         <div className="visualizer">
-          <Grid/>
+          <Grid selected_type={selected_type}/>
         </div>
 
         <div className="live_stats">

@@ -16,10 +16,52 @@ export const get_time_since = (start_date, current_date) => {
   return time_in_seconds;
 };
 
+let start = -1, start_coordinates = [0, 0];
+let end = -1, end_coordinates = [15 - 1, 15 - 1];
+let start_color = null;
+let end_color = null;
+let seen_color = null;
+let in_stack_color = null
+let current_color = null
+
+export const unpack_colors = (colors) => {
+  start_color = colors.filter(color => color.label == 'Start')[0].color;
+  end_color = colors.filter(color => color.label == 'Finish')[0].color;
+  seen_color = colors.filter(color => color.label == 'Seen')[0].color;
+  in_stack_color = "rgb(255, 150, 50)";
+  current_color = "rgb(100, 200, 100)";
+}
+
 export const color_element = (index, color) => {
   const cellRef = document.querySelector(`[data-index='${index}']`);
   if (cellRef) {
+
+    // Make sure start element is uinque
+    if(color == start_color && start != -1) {
+      const previousCellRef = document.querySelector(`[data-index='${start}']`);
+      previousCellRef.style.background = "rgb(240, 240, 240)";
+      start = index;
+    }
+
+    // Make sure start element is uinque
+    if(color == end_color && end != -1) {
+      const previousCellRef = document.querySelector(`[data-index='${end}']`);
+      previousCellRef.style.background = "rgb(240, 240, 240)";
+      end = index;
+    }
+
     cellRef.style.background = color;
+
+    // Keep track of start index
+    if (color == start_color) {
+      start = index;
+      start_coordinates = [parseInt(index / 15), index % 15];
+    }
+    // Keep track of start index
+    if (color == end_color) {
+      end = index;
+      end_coordinates = [parseInt(index / 15), index % 15];
+    }
   }
 };
 
@@ -27,8 +69,8 @@ export const buildMatrix = (cellRefs, colors) => {
 
   const wall_color = colors.filter(color => color.label == 'Wall')[0].color;
 
-  const rows = 40
-  const cols = 60
+  const rows = 15
+  const cols = 15
   let matrix = Array.from({ length: rows }, () => Array(cols).fill(0))
 
   for (let i = 0; i < rows; i++) {
@@ -42,8 +84,10 @@ export const buildMatrix = (cellRefs, colors) => {
     }
   }
 
-  matrix[0][0] = 1;
-  matrix[rows - 1][cols - 1] = -2;
+  console.log(start_coordinates)
+  console.log(end_coordinates)
+  matrix[start_coordinates[0]][start_coordinates[1]] = 1;
+  matrix[end_coordinates[0]][end_coordinates[1]] = -2;
 
   return matrix;
 };
@@ -72,8 +116,6 @@ export async function colorMatrix(changes) {
   // While queue of changes is NOT empty
   while(changes.isEmpty() == false) {
 
-    console.log("DA 1");
-
     // Get first element + Remove first element
     let [i, j, state] = changes.dequeue();
 
@@ -82,8 +124,6 @@ export async function colorMatrix(changes) {
       return;
     }
 
-    console.log("DA 2");
-
     while (isPaused) {
       await new Promise(resolve => setTimeout(resolve, 100)); // Wait 100ms to check again
     }
@@ -91,19 +131,19 @@ export async function colorMatrix(changes) {
     await new Promise(resolve => setTimeout(resolve, 10)); // Wait 1 second before next change
 
     if (state === "in stack") {
-      color_element(i * 60 + j, 'yellow');
+      color_element(i * 15 + j, in_stack_color);
     } else if (state === "current") {
-      color_element(i * 60 + j, 'red');
+      color_element(i * 15 + j, current_color);
     } else {
-      color_element(i * 60 + j, 'green');
+      color_element(i * 15 + j, seen_color);
     }
   }
 }
 
 export function clearMatrix(cellRefs)
 {
-  const rows = 40
-  const cols = 60
+  const rows = 15
+  const cols = 15
 
   for (let i = 0; i < rows; i++)
   {

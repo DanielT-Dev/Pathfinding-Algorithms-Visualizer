@@ -9,12 +9,12 @@ import { useColors } from "../contexts/ColorsContext";
 
 export const cellRefs = { current: []}
   
-const Grid = () => {
+const Grid = ({ selected_type }) => {
 
   const { colors } = useColors();
 
-  const rows = 40;
-  const cols = 60;
+  const rows = 15;
+  const cols = 15;
   const [cells] = useState(
     Array.from({ length: rows * cols })
   );
@@ -23,14 +23,14 @@ const Grid = () => {
 
   const [is_holding, set_is_holding] = useState(false);
 
-  const handleCellClick = (index) => {
-    color_element(index, colors[1].color);
+  const handleCellClick = (index, type) => {
+    color_element(index, colors[type].color);
   };
 
   const handleMouseDown = (index) => {
     isMouseDown.current = true;
     console.log("de la handleMouseDown...")
-    handleCellClick(index);
+    handleCellClick(index, selected_type);
   };
 
   const handleMouseUp = () => {
@@ -39,7 +39,7 @@ const Grid = () => {
 
   const handleMouseEnter = (index) => {
     if (isMouseDown.current) {
-      handleCellClick(index);
+      handleCellClick(index, selected_type);
     }
   };
 
