@@ -32,6 +32,13 @@ export const unpack_colors = (colors) => {
   current_color = "rgb(100, 200, 100)";
 }
 
+let speed = 1;
+
+export const unpack_speed = (new_speed) => {
+  speed = new_speed;
+  console.log(speed);
+}
+
 export const color_element = (index, color) => {
   const cellRef = document.querySelector(`[data-index='${index}']`);
   if (cellRef) {
@@ -109,8 +116,6 @@ export const reset_algorithm = (new_signal) => {
 
 export async function colorMatrix(changes, selected_speed) {
 
-  console.log("Avem viteza: ", selected_speed)
-
   reset_signal = false
 
   // While queue of changes is NOT empty
@@ -125,10 +130,11 @@ export async function colorMatrix(changes, selected_speed) {
     }
 
     while (isPaused) {
+      console.log("Paused")
       await new Promise(resolve => setTimeout(resolve, 100)); // Wait 100ms to check again
     }
 
-    await new Promise(resolve => setTimeout(resolve, 100 * (1 / selected_speed))); // Wait 1 second before next change
+    await new Promise(resolve => setTimeout(resolve, 100 * (1 / speed))); // Wait 1 second before next change
 
     if (state === "in stack") {
       color_element(i * 15 + j, in_stack_color);
