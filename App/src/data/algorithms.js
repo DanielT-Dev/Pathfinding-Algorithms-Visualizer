@@ -4,10 +4,10 @@ import { colorMatrix } from "../utils"
 
 import Queue from "../structures/Queue"
 
-export const DFS_DTO = (colors) => {return {
+export const DFS_DTO = (colors, speeds_params) => {return {
     name: "DFS",
     colors: colors,
-    speeds: [0.1, 0.25, 0.5, 0.75, 1, 2, 3, 4, 8, 9, 10],
+    speeds: speeds_params.speed_values,
     controls: {
         start: async (matrix) => {
 
@@ -17,7 +17,7 @@ export const DFS_DTO = (colors) => {return {
 
             let changes_queue = new Queue(changes);
 
-            await colorMatrix(changes_queue)
+            await colorMatrix(changes_queue, speeds_params.speed_values[speeds_params.selected_speed])
 
             console.log("[back-end] Task DFS finished with 0 errors")
         }
@@ -28,10 +28,10 @@ export const DFS_DTO = (colors) => {return {
 import { Lee } from "../../../Visualizer-Algorithms/lee"
 import { color_element } from "../utils"
 
-export const BFS_DTO = (colors) => { return {
+export const BFS_DTO = (colors, speeds_params) => { return {
     name: "BFS",
     colors: colors,
-    speeds: [0.1, 0.25, 0.5, 0.75, 1, 2, 3, 4, 8, 9, 10],
+    speeds: speeds_params.speed_values,
     controls: {
         start: async (matrix) => {
 
@@ -40,8 +40,8 @@ export const BFS_DTO = (colors) => { return {
             let changes = Lee(matrix)
 
             let changes_queue = new Queue(changes);
-
-            await colorMatrix(changes_queue)
+            
+            await colorMatrix(changes_queue, speeds_params.speed_values[speeds_params.selected_speed])
             console.log("[back-end] Task BFS finished with 0 errors")
         }
     },

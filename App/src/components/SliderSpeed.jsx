@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './SliderSpeed.module.css';
 
-const SpeedSlider = ({speeds}) => {
+const SpeedSlider = ({speeds, set_speed_params}) => {
   const fixedPoints = speeds;
   const [value, setValue] = useState(fixedPoints[0]);
   const [index, setIndex] = useState(0);
 
   const handleChange = (e) => {
     setIndex(Number(e.target.value));
+
+    console.log(index, speeds[index])
+
+    set_speed_params(prev => ({...prev, selected_speed: speeds[index]}))
   };
 
   return (

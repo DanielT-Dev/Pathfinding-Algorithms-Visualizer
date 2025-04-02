@@ -16,15 +16,22 @@ import { get_time_since } from './utils';
 
 import SelectColors from './components/SelectColors';
 import { useColors } from './contexts/ColorsContext';
+import { useSpeeds } from './contexts/SpeedsContext';
 
 const Pathfinding = () => {
 
   const { colors } = useColors();
+  const { speeds } = useSpeeds();
   // Wall element type selected by default
   const [selected_type, set_selected_type] = useState(1);
 
-  const [dfs_task, set_dfs_task] = useState(DFS_DTO(colors));
-  const [bfs_task, set_bfs_task] = useState(BFS_DTO(colors));
+  const [speed_params, set_speed_params] = useState({
+    selected_speed: 0,
+    speed_values: speeds,
+  })
+
+  const [dfs_task, set_dfs_task] = useState(DFS_DTO(colors, speed_params));
+  const [bfs_task, set_bfs_task] = useState(BFS_DTO(colors, speed_params));
 
   const [algorithm_name, set_algorithm_name] = useState(null)
   const [algorithm, setAlgorithm] = useState(dfs_task);
@@ -44,6 +51,7 @@ const Pathfinding = () => {
   };
 
   const handleStart = () => {
+
     set_is_running(true);
 
     if (logs.length === 0) {
@@ -155,13 +163,13 @@ const Pathfinding = () => {
   
 
   useEffect(() => {
-    const updatedDfsTask = DFS_DTO(colors);
-    const updatedBfsTask = BFS_DTO(colors);
+    const updatedDfsTask = DFS_DTO(colors, speed_params);
+    const updatedBfsTask = BFS_DTO(colors, speed_params);
 
     set_dfs_task(updatedDfsTask);
     set_bfs_task(updatedBfsTask);
 
-  }, [colors]);
+  }, [colors, speed_params]);
 
   useEffect(() => {
     if (dfs_task && bfs_task) {
@@ -182,7 +190,7 @@ const Pathfinding = () => {
         <SelectColors algorithm={algorithm} set_selected_type={set_selected_type}/>
 
         <div className="select_speed">
-          <SliderSpeed speeds={algorithm.speeds}/>
+          <SliderSpeed speeds={algorithm.speeds} set_speed_params={set_speed_params}/>
         </div>
 
         <div className="controls">

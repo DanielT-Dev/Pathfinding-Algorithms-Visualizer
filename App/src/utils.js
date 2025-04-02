@@ -84,8 +84,6 @@ export const buildMatrix = (cellRefs, colors) => {
     }
   }
 
-  console.log(start_coordinates)
-  console.log(end_coordinates)
   matrix[start_coordinates[0]][start_coordinates[1]] = 1;
   matrix[end_coordinates[0]][end_coordinates[1]] = -2;
 
@@ -109,7 +107,9 @@ export const reset_algorithm = (new_signal) => {
   reset_signal = new_signal
 }
 
-export async function colorMatrix(changes) {
+export async function colorMatrix(changes, selected_speed) {
+
+  console.log("Avem viteza: ", selected_speed)
 
   reset_signal = false
 
@@ -128,7 +128,7 @@ export async function colorMatrix(changes) {
       await new Promise(resolve => setTimeout(resolve, 100)); // Wait 100ms to check again
     }
 
-    await new Promise(resolve => setTimeout(resolve, 10)); // Wait 1 second before next change
+    await new Promise(resolve => setTimeout(resolve, 100 * (1 / selected_speed))); // Wait 1 second before next change
 
     if (state === "in stack") {
       color_element(i * 15 + j, in_stack_color);

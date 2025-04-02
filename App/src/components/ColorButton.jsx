@@ -42,7 +42,6 @@ const ColorButton = ({ label, default_color, onColorChange, index, set_relative_
   }
 
   useEffect(() => {
-    console.log(rgbToHex(default_color) )
   }, [color])
 
   let buttonClass;

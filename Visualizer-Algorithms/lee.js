@@ -67,7 +67,7 @@ export function Lee(matrix)
 
         changes.push([row, col, 'visited'])
         
-        console.log("visited: " + visited + "\nrevisited: " + revisited + "\ninQueue: " + inQueue + "\n");
+        //console.log("visited: " + visited + "\nrevisited: " + revisited + "\ninQueue: " + inQueue + "\n");
     }
 
     console.log("Not found!\n");
