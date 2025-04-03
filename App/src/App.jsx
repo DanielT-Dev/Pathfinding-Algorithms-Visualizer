@@ -4,14 +4,20 @@ import Pathfinding from './Pathfinding'
 
 import { ColorsProvider } from './contexts/ColorsContext'
 import { SpeedsProvider } from './contexts/SpeedsContext'
+import { ControlsProvider } from './contexts/ControlsContext'
+import { TasksProvider } from './contexts/TasksContext'
 
 function App() {
   return (
-    <SpeedsProvider>
-      <ColorsProvider>
-        <Pathfinding/>
-      </ColorsProvider>
-    </SpeedsProvider>
+    <ColorsProvider>
+      <ControlsProvider>
+        <SpeedsProvider>
+          <TasksProvider>
+            <Pathfinding/>
+          </TasksProvider>
+        </SpeedsProvider>
+      </ControlsProvider>
+    </ColorsProvider>
   )
 }
 

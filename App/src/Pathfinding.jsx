@@ -8,8 +8,6 @@ import Dropdwon from './components/Dropdown';
 import { buildMatrix, clearMatrix, pause_algorithm, reset_algorithm, resume_algorithm } from './utils';
 import { cellRefs } from './components/Grid';
 
-import { BFS_DTO } from './data/algorithms';
-import { DFS_DTO } from './data/algorithms';
 import SliderSpeed from './components/SliderSpeed';
 
 import { get_time_since } from './utils';
@@ -17,11 +15,20 @@ import { get_time_since } from './utils';
 import SelectColors from './components/SelectColors';
 import { useColors } from './contexts/ColorsContext';
 import { useSpeeds } from './contexts/SpeedsContext';
+import { useControls } from './contexts/ControlsContext';
+import { useTasks } from './contexts/TasksContext';
+
+import { BFS_DTO } from './data/algorithms';
+import { DFS_DTO } from './data/algorithms';
+
+import { assign_color } from './Logs';
 
 const Pathfinding = () => {
 
   const { colors } = useColors();
   const { speeds } = useSpeeds();
+  const { is_running, set_is_running, algorithm_name, set_algorithm_name } = useControls();
+  const { dfs_task, set_dfs_task, bfs_task, set_bfs_task } = useTasks();
   // Wall element type selected by default
   const [selected_type, set_selected_type] = useState(1);
 
@@ -30,21 +37,14 @@ const Pathfinding = () => {
     speed_values: speeds,
   })
 
-  const [dfs_task, set_dfs_task] = useState(DFS_DTO(colors, speed_params));
-  const [bfs_task, set_bfs_task] = useState(BFS_DTO(colors, speed_params));
-
-  const [algorithm_name, set_algorithm_name] = useState(null)
   const [algorithm, setAlgorithm] = useState(dfs_task);
-  const [is_running, set_is_running] = useState(false);
 
   const [logs, setLogs] = useState([]);
   const [timestamps, setTimestamps] = useState([]);
 
-  // Create useRef to keep track of the logs and timestamps
   const logsRef = useRef(logs);
   const timestampsRef = useRef(timestamps);
 
-  // Update logsRef and timestampsRef directly
   const updateLogsAndTimestamps = (newLogs, newTimestamps) => {
     logsRef.current = newLogs;
     timestampsRef.current = newTimestamps;
@@ -129,15 +129,6 @@ const Pathfinding = () => {
     
   }
 
-  const assign_color = (log) => {
-    if (log == 'Started.' || log == 'Resumed.')
-      return "rgb(50, 200, 50)";
-    if (log == 'Stopped.')
-      return "rgb(200, 50, 50)";
-    if (log == 'Paused.')
-      return "rgb(255, 170, 50)";
-  }
-
   const assign_algorithm = (algorithm_name) => {
     if (algorithm_name == 'DFS')
       setAlgorithm(dfs_task)
@@ -146,22 +137,12 @@ const Pathfinding = () => {
   }
 
   useEffect(() => {
-    //console.log('Logs changed:', logs);
-  }, [logs]);
-   
-  useEffect(() => {
-    //console.log('Timestamps changed:', timestamps);
-  }, [timestamps]);
-
-  useEffect(() => {
     handleReset(false)
     set_is_running(false)
 
     assign_algorithm(algorithm_name)
     
   }, [algorithm_name])
-  
-
   useEffect(() => {
     const updatedDfsTask = DFS_DTO(colors, speed_params);
     const updatedBfsTask = BFS_DTO(colors, speed_params);
@@ -170,7 +151,6 @@ const Pathfinding = () => {
     set_bfs_task(updatedBfsTask);
 
   }, [colors, speed_params]);
-
   useEffect(() => {
     if (dfs_task && bfs_task) {
       assign_algorithm(algorithm_name)
