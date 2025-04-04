@@ -24,11 +24,19 @@ const Grid = ({ selected_type }) => {
   const [is_holding, set_is_holding] = useState(false);
 
   const handleCellClick = (index, type) => {
+<<<<<<< HEAD
     color_element(index, colors[type].color, "0.5s");
+=======
+    color_element(index, colors[type].color);
+>>>>>>> 5b92189b6b6dfb5539a286843eb2756e88d5bcdd
   };
 
   const handleMouseDown = (index) => {
     isMouseDown.current = true;
+<<<<<<< HEAD
+=======
+    console.log("de la handleMouseDown...")
+>>>>>>> 5b92189b6b6dfb5539a286843eb2756e88d5bcdd
     handleCellClick(index, selected_type);
   };
 

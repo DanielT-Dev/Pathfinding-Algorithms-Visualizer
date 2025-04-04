@@ -16,8 +16,13 @@ export const get_time_since = (start_date, current_date) => {
   return time_in_seconds;
 };
 
+<<<<<<< HEAD
 let start = -1, start_coordinates = [-1, -1];
 let end = -1, end_coordinates = [-1, -1];
+=======
+let start = -1, start_coordinates = [0, 0];
+let end = -1, end_coordinates = [15 - 1, 15 - 1];
+>>>>>>> 5b92189b6b6dfb5539a286843eb2756e88d5bcdd
 let start_color = null;
 let end_color = null;
 let seen_color = null;
@@ -39,26 +44,42 @@ export const unpack_speed = (new_speed) => {
   console.log(speed);
 }
 
+<<<<<<< HEAD
 export const color_element = async (index, color, animation_duration) => {
+=======
+export const color_element = async (index, color) => {
+>>>>>>> 5b92189b6b6dfb5539a286843eb2756e88d5bcdd
   const cellRef = document.querySelector(`[data-index='${index}']`);
   if (cellRef) {
 
     // Make sure start element is uinque
+<<<<<<< HEAD
     if (color == start_color && start != -1) {
       const previousCellRef = document.querySelector(`[data-index='${start}']`);
       previousCellRef.style.animation = "none";
+=======
+    if(color == start_color && start != -1) {
+      const previousCellRef = document.querySelector(`[data-index='${start}']`);
+>>>>>>> 5b92189b6b6dfb5539a286843eb2756e88d5bcdd
       previousCellRef.style.background = "rgb(240, 240, 240)";
       start = index;
     }
 
+<<<<<<< HEAD
     // Make sure end element is uinque
     if (color == end_color && end != -1) {
       const previousCellRef = document.querySelector(`[data-index='${end}']`);
       previousCellRef.style.animation = "none";
+=======
+    // Make sure start element is uinque
+    if(color == end_color && end != -1) {
+      const previousCellRef = document.querySelector(`[data-index='${end}']`);
+>>>>>>> 5b92189b6b6dfb5539a286843eb2756e88d5bcdd
       previousCellRef.style.background = "rgb(240, 240, 240)";
       end = index;
     }
 
+<<<<<<< HEAD
     if (cellRef.style.background != color) {
       cellRef.style.animation = "none"; // Reset animation
       cellRef.offsetHeight; // Trigger reflow (hack to restart animation)
@@ -70,6 +91,13 @@ export const color_element = async (index, color, animation_duration) => {
 
       cellRef.style.background = color;
     }
+=======
+    cellRef.style.animation = "none"; // Reset animation
+    cellRef.offsetHeight; // Trigger reflow (hack to restart animation)
+    cellRef.style.animation = "color_element 2s cubic-bezier(0.4, 0, 0.2, 1) forwards";
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    cellRef.style.background = color;
+>>>>>>> 5b92189b6b6dfb5539a286843eb2756e88d5bcdd
 
     // Keep track of start index
     if (color == start_color) {
@@ -86,6 +114,7 @@ export const color_element = async (index, color, animation_duration) => {
 
 export const buildMatrix = (cellRefs, colors) => {
 
+<<<<<<< HEAD
 
   if (start_coordinates[0] == -1 || start_coordinates[1] == -1) {
     alert("Start is not selected!\n");
@@ -96,6 +125,8 @@ export const buildMatrix = (cellRefs, colors) => {
     return "ERROR";
   }
 
+=======
+>>>>>>> 5b92189b6b6dfb5539a286843eb2756e88d5bcdd
   const wall_color = colors.filter(color => color.label == 'Wall')[0].color;
 
   const rows = 15
@@ -136,6 +167,7 @@ export const reset_algorithm = (new_signal) => {
   reset_signal = new_signal
 }
 
+<<<<<<< HEAD
 export async function colorMatrix(changes) {
 
   isPaused = false;
@@ -144,6 +176,14 @@ export async function colorMatrix(changes) {
 
   // While queue of changes is NOT empty
   while (changes.isEmpty() == false) {
+=======
+export async function colorMatrix(changes, selected_speed) {
+
+  reset_signal = false
+
+  // While queue of changes is NOT empty
+  while(changes.isEmpty() == false) {
+>>>>>>> 5b92189b6b6dfb5539a286843eb2756e88d5bcdd
 
     // Get first element + Remove first element
     let [i, j, state] = changes.dequeue();
@@ -154,14 +194,18 @@ export async function colorMatrix(changes) {
     }
 
     while (isPaused) {
+<<<<<<< HEAD
       if (reset_signal == true) {
         reset_signal = false
         return;
       }
+=======
+>>>>>>> 5b92189b6b6dfb5539a286843eb2756e88d5bcdd
       console.log("Paused")
       await new Promise(resolve => setTimeout(resolve, 100)); // Wait 100ms to check again
     }
 
+<<<<<<< HEAD
     let delay_duration = 500 * (1 / speed); // 0.5s is the base animation duration
     let animation_duration = (delay_duration / 1000) + "s";
 
@@ -177,10 +221,21 @@ export async function colorMatrix(changes) {
       await color_element(i * 15 + j, current_color, animation_duration);
     } else {
       await color_element(i * 15 + j, seen_color, animation_duration);
+=======
+    await new Promise(resolve => setTimeout(resolve, 100 * (1 / speed))); // Wait 1 second before next change
+
+    if (state === "in stack") {
+      await color_element(i * 15 + j, in_stack_color);
+    } else if (state === "current") {
+      await color_element(i * 15 + j, current_color);
+    } else {
+      await color_element(i * 15 + j, seen_color);
+>>>>>>> 5b92189b6b6dfb5539a286843eb2756e88d5bcdd
     }
   }
 }
 
+<<<<<<< HEAD
 export function clearMatrix(cellRefs) {
   const rows = 15
   const cols = 15
@@ -192,6 +247,17 @@ export function clearMatrix(cellRefs) {
   for (let i = 0; i < rows; i++) {
     for (let j = 0; j < cols; j++) {
       cellRefs.current[i * cols + j].style.animation = "none";
+=======
+export function clearMatrix(cellRefs)
+{
+  const rows = 15
+  const cols = 15
+
+  for (let i = 0; i < rows; i++)
+  {
+    for (let j = 0; j < cols; j++)
+    {
+>>>>>>> 5b92189b6b6dfb5539a286843eb2756e88d5bcdd
       cellRefs.current[i * cols + j].style.background = "rgb(240, 240, 240)";
     }
   }

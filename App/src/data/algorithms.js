@@ -17,7 +17,11 @@ export const DFS_DTO = (colors, speeds_params) => {return {
 
             let changes_queue = new Queue(changes);
 
+<<<<<<< HEAD
             await colorMatrix(changes_queue)
+=======
+            await colorMatrix(changes_queue, speeds_params.speed_values[speeds_params.selected_speed])
+>>>>>>> 5b92189b6b6dfb5539a286843eb2756e88d5bcdd
 
             console.log("[back-end] Task DFS finished with 0 errors")
         }
@@ -26,6 +30,10 @@ export const DFS_DTO = (colors, speeds_params) => {return {
 }}
 
 import { Lee } from "../../../Visualizer-Algorithms/lee"
+<<<<<<< HEAD
+=======
+import { color_element } from "../utils"
+>>>>>>> 5b92189b6b6dfb5539a286843eb2756e88d5bcdd
 
 export const BFS_DTO = (colors, speeds_params) => { return {
     name: "BFS",
@@ -40,8 +48,12 @@ export const BFS_DTO = (colors, speeds_params) => { return {
 
             let changes_queue = new Queue(changes);
             
+<<<<<<< HEAD
             await colorMatrix(changes_queue)
             
+=======
+            await colorMatrix(changes_queue, speeds_params.speed_values[speeds_params.selected_speed])
+>>>>>>> 5b92189b6b6dfb5539a286843eb2756e88d5bcdd
             console.log("[back-end] Task BFS finished with 0 errors")
         }
     },
