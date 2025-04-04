@@ -39,7 +39,7 @@ export const unpack_speed = (new_speed) => {
   console.log(speed);
 }
 
-export const color_element = (index, color) => {
+export const color_element = async (index, color) => {
   const cellRef = document.querySelector(`[data-index='${index}']`);
   if (cellRef) {
 
@@ -57,6 +57,10 @@ export const color_element = (index, color) => {
       end = index;
     }
 
+    cellRef.style.animation = "none"; // Reset animation
+    cellRef.offsetHeight; // Trigger reflow (hack to restart animation)
+    cellRef.style.animation = "color_element 2s cubic-bezier(0.4, 0, 0.2, 1) forwards";
+    await new Promise(resolve => setTimeout(resolve, 2000));
     cellRef.style.background = color;
 
     // Keep track of start index
@@ -137,11 +141,11 @@ export async function colorMatrix(changes, selected_speed) {
     await new Promise(resolve => setTimeout(resolve, 100 * (1 / speed))); // Wait 1 second before next change
 
     if (state === "in stack") {
-      color_element(i * 15 + j, in_stack_color);
+      await color_element(i * 15 + j, in_stack_color);
     } else if (state === "current") {
-      color_element(i * 15 + j, current_color);
+      await color_element(i * 15 + j, current_color);
     } else {
-      color_element(i * 15 + j, seen_color);
+      await color_element(i * 15 + j, seen_color);
     }
   }
 }

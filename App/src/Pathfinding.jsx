@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import './style.css';
+import './animations.css';
 import "./scrollbar.css";
 
 import Grid from './components/Grid';
