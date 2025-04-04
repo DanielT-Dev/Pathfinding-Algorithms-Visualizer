@@ -1,0 +1,9 @@
+1.
+Recolor matrix after changing color settings.
+All walls will be updated with current color settings.
+
+2.
+One element is still colored after updating color with its old color.
+
+3.
+User should not be able to add "Seen" elements.
