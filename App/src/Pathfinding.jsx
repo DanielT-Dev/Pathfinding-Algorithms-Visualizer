@@ -23,6 +23,7 @@ import { BFS_DTO } from './data/algorithms';
 import { DFS_DTO } from './data/algorithms';
 
 import { assign_color } from './Logs';
+import { test_color_element } from './Tests/test_utils';
 
 const Pathfinding = () => {
 
@@ -38,6 +39,14 @@ const Pathfinding = () => {
     selected_speed: 4,
     speed_values: speeds,
   })
+
+  useEffect(() => {
+    const run_all_tests = async () => {
+      await test_color_element()
+    }
+
+    run_all_tests();
+  }, [])
 
   const [is_paused, set_is_paused] = useState(false);
 

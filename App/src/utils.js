@@ -82,6 +82,10 @@ export const color_element = async (index, color, animation_duration) => {
       end_coordinates = [parseInt(index / 15), index % 15];
     }
   }
+
+  return {
+    color: cellRef.style.background,
+  }
 };
 
 export const buildMatrix = (cellRefs, colors) => {
