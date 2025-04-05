@@ -5,7 +5,7 @@ import { unpack_speed } from '../utils';
 const SpeedSlider = ({speeds, set_speed_params}) => {
   const fixedPoints = speeds;
   const [value, setValue] = useState(fixedPoints[0]);
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(4);
 
   const handleChange = (e) => {
     const newIndex = Number(e.target.value);

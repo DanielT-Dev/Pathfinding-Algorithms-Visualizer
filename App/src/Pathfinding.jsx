@@ -32,11 +32,14 @@ const Pathfinding = () => {
   const { dfs_task, set_dfs_task, bfs_task, set_bfs_task } = useTasks();
   // Wall element type selected by default
   const [selected_type, set_selected_type] = useState(1);
-
+  
+  // TODO: Delete
   const [speed_params, set_speed_params] = useState({
-    selected_speed: 0,
+    selected_speed: 4,
     speed_values: speeds,
   })
+
+  const [is_paused, set_is_paused] = useState(false);
 
   const [algorithm, setAlgorithm] = useState(dfs_task);
 
@@ -54,6 +57,7 @@ const Pathfinding = () => {
   const handleStart = () => {
 
     set_is_running(true);
+    set_is_paused(false);
 
     if (logs.length === 0) {
       const newLogs = ["Started."];
@@ -65,6 +69,12 @@ const Pathfinding = () => {
       console.log("[front-end] Algorithm started")
 
       const matrix = buildMatrix(cellRefs, colors);
+
+      if (matrix == "ERROR")
+      {
+          handleReset(false);
+          return;
+      }
 
       algorithm.controls.start(matrix)
       console.log("[front-end] Algorithm finished successfully")
@@ -89,6 +99,7 @@ const Pathfinding = () => {
 
   const handlePause = () => {
     set_is_running(false);
+    set_is_paused(true);
 
     if (logs.at(-1) == "Paused.")
       return 
@@ -110,8 +121,15 @@ const Pathfinding = () => {
     pause_algorithm();
   }
 
+  useEffect(() => {
+    // Acest cod va fi apelat **după ce** starea is_paused a fost actualizată
+    console.log("IsPaused bro: " + is_paused);
+  }, [is_paused]); // se execută de fiecare dată când is_paused se schimbă
+
+  
   const handleReset = async (new_signal) => {
     set_is_running(false);
+    set_is_paused(false);
 
     reset_algorithm(new_signal)
 
@@ -164,11 +182,10 @@ const Pathfinding = () => {
 
       <div className="settings">
         <div className="select_algorithm">
-          <Dropdwon set_algorithm_name={set_algorithm_name} disabled={is_running} />
+          <Dropdwon set_algorithm_name={set_algorithm_name} disabled={is_running || is_paused} />
         </div>
 
-        
-        <SelectColors algorithm={algorithm} set_selected_type={set_selected_type}/>
+        <SelectColors algorithm={algorithm} set_selected_type={set_selected_type} isDisabled = {is_running} isPaused={is_paused}/>
 
         <div className="select_speed">
           <SliderSpeed speeds={algorithm.speeds} set_speed_params={set_speed_params}/>

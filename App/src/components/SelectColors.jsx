@@ -6,7 +6,7 @@ import { useColors } from "../contexts/ColorsContext";
 import ColorSelectPopover from './ColorSelectPopover';
 import { unpack_colors } from '../utils';
 
-const SelectColors = ({ algorithm, set_selected_type }) => {
+const SelectColors = ({ algorithm, set_selected_type, isDisabled, isPaused }) => {
 
   const [selected_button, set_selected_button] = useState(null);
 
@@ -22,27 +22,31 @@ const SelectColors = ({ algorithm, set_selected_type }) => {
   }, [relative_colors])
 
   return (
-    <div className="select_colors">
+    <div className="select_colors"
+    style={{
+      opacity: (isDisabled || isPaused) ? 0.5 : 1,
+      pointerEvents: (isDisabled || isPaused) ? "none" : "auto"
+    }}>
       {
-          algorithm.colors.map((color, index) => {
-            return <div 
-                key={index}
-                onClick={() => {
-                  set_selected_button(index);
-                  set_selected_type(index);
-                }}
-                className={selected_button === index ? 'selected_color_button' : ''}
-              >
-                <ColorButton
-                  label={color.label}
-                  default_color={color.color}
-                  index={index}
-                  set_relative_colors={set_relative_colors}
-                  set_popover_is_open={set_popover_is_open}
-                />
-            </div>
-          })
-        }
+        algorithm.colors.map((color, index) => {
+          return <div
+            key={index}
+            onClick={() => {
+              set_selected_button(index);
+              set_selected_type(index);
+            }}
+            className={selected_button === index ? 'selected_color_button' : ''}
+          >
+            <ColorButton
+              label={color.label}
+              default_color={color.color}
+              index={index}
+              set_relative_colors={set_relative_colors}
+              set_popover_is_open={set_popover_is_open}
+            />
+          </div>
+        })
+      }
     </div>
   )
 }
