@@ -19,6 +19,7 @@ function deepEqual(a, b) {
     return true;
   }
 
+import { cellRefs } from "../components/Grid.jsx";
 import { buildMatrix, color_element } from "../utils.js"
 
 /*
@@ -56,11 +57,13 @@ export const test_color_element = async () => {
         }
     }
 
-    console.log("Errors: " + error_counter + " in test_color_element()");
-    for(let i = 0;i < error_counter;i++)
-        console.log("Failed because: " + resulted_output)
+    return error_case_list;
 }
 
+/*
+This function takes 1 arguments:
+    cellRefs    =>  for targeting the HTML elements of the UI grid
+*/
 export const test_build_matrix = () => {
     let input = []
     let output = []
@@ -69,16 +72,24 @@ export const test_build_matrix = () => {
     let error_case_list = []
 
     // Function specific variables
-    let start_color = null;
-    let end_color = null;
-    let seen_color = null;
-    let in_stack_color = null
-    let current_color = null
+    let start_color =  { label: "Start", color: "rgb(57, 218, 230)" };
+    let end_color = { label: "Finish", color: "rgb(17, 207, 32)" }
+    let seen_color = { label: "Seen", color: "rgb(255, 238, 110)" };
+    let in_stack_color = {label: "In Stack", color:"rgb(255, 150, 50)"};
+    let current_color = {label: "Current", color:"rgb(100, 200, 100)"};
+    let wall_color = { label: "Wall", color: "rgb(30, 30, 30)" };
 
     for(let i = 0;i < input.length;i++) {
         let test_case = input[i]
         let expected_output = output[i]
 
-        //resulted_output = buildMatrix()
+        resulted_output = buildMatrix(cellRefs);
+
+        if (deepEqual(resulted_output, expected_output) == false) {
+            error_counter++;
+            error_case_list.push(resulted_output);
+        }
     }
+
+    return error_case_list;
 }

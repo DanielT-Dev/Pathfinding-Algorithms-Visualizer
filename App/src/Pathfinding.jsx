@@ -23,7 +23,7 @@ import { BFS_DTO } from './data/algorithms';
 import { DFS_DTO } from './data/algorithms';
 
 import { assign_color } from './Logs';
-import { test_color_element } from './Tests/test_utils';
+import { test_build_matrix, test_color_element } from './Tests/test_utils';
 
 const Pathfinding = () => {
 
@@ -42,7 +42,35 @@ const Pathfinding = () => {
 
   useEffect(() => {
     const run_all_tests = async () => {
-      await test_color_element()
+
+      const functions = [test_build_matrix]
+      const functions_names = ["test_build_matrix"]
+      const async_functions = [test_color_element]
+      const async_functions_names = ["test_color_element"]
+
+      for(let i = 0;i < functions.length;i++)
+      {
+        let current_func = functions[i]
+
+        let errors = current_func()
+
+        console.log("Errors: " + errors.length + ` in ${functions_names[i]}()`)
+        for(let i = 0;i < errors.length;i++)
+            console.log("Failed because: " + resulted_output)
+      }
+
+      for(let i = 0;i < async_functions.length;i++)
+        {
+          let current_func = async_functions[i]
+  
+          let errors = await current_func()
+  
+          console.log("Errors: " + errors.length + ` in ${async_functions_names[i]}()`)
+          for(let i = 0;i < errors.length;i++)
+              console.log("Failed because: " + resulted_output)
+        }
+
+      
     }
 
     run_all_tests();
