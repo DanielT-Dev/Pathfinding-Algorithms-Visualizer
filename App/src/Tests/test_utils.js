@@ -19,7 +19,7 @@ function deepEqual(a, b) {
     return true;
   }
 
-import { color_element } from "../utils.js"
+import { buildMatrix, color_element } from "../utils.js"
 
 /*
 This function takes 3 arguments:
@@ -59,4 +59,26 @@ export const test_color_element = async () => {
     console.log("Errors: " + error_counter + " in test_color_element()");
     for(let i = 0;i < error_counter;i++)
         console.log("Failed because: " + resulted_output)
+}
+
+export const test_build_matrix = () => {
+    let input = []
+    let output = []
+    let resulted_output = []
+    let error_counter = 0
+    let error_case_list = []
+
+    // Function specific variables
+    let start_color = null;
+    let end_color = null;
+    let seen_color = null;
+    let in_stack_color = null
+    let current_color = null
+
+    for(let i = 0;i < input.length;i++) {
+        let test_case = input[i]
+        let expected_output = output[i]
+
+        //resulted_output = buildMatrix()
+    }
 }

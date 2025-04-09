@@ -23,11 +23,13 @@ let end_color = null;
 let seen_color = null;
 let in_stack_color = null
 let current_color = null
+let wall_color = null
 
 export const unpack_colors = (colors) => {
   start_color = colors.filter(color => color.label == 'Start')[0].color;
   end_color = colors.filter(color => color.label == 'Finish')[0].color;
   seen_color = colors.filter(color => color.label == 'Seen')[0].color;
+  wall_color = colors.filter(color => color.label == 'Wall')[0].color;
   in_stack_color = "rgb(255, 150, 50)";
   current_color = "rgb(100, 200, 100)";
 }
@@ -88,7 +90,7 @@ export const color_element = async (index, color, animation_duration) => {
   }
 };
 
-export const buildMatrix = (cellRefs, colors) => {
+export const buildMatrix = (cellRefs) => {
 
 
   if (start_coordinates[0] == -1 || start_coordinates[1] == -1) {
@@ -100,7 +102,7 @@ export const buildMatrix = (cellRefs, colors) => {
     return "ERROR";
   }
 
-  const wall_color = colors.filter(color => color.label == 'Wall')[0].color;
+  
 
   const rows = 15
   const cols = 15

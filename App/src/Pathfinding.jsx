@@ -77,7 +77,7 @@ const Pathfinding = () => {
 
       console.log("[front-end] Algorithm started")
 
-      const matrix = buildMatrix(cellRefs, colors);
+      const matrix = buildMatrix(cellRefs);
 
       if (matrix == "ERROR")
       {
@@ -132,7 +132,6 @@ const Pathfinding = () => {
 
   useEffect(() => {
     // Acest cod va fi apelat **după ce** starea is_paused a fost actualizată
-    console.log("IsPaused bro: " + is_paused);
   }, [is_paused]); // se execută de fiecare dată când is_paused se schimbă
 
   
