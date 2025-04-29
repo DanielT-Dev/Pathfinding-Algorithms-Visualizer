@@ -73,7 +73,7 @@ const Pathfinding = () => {
       
     }
 
-    run_all_tests();
+    //run_all_tests();
   }, [])
 
   const [is_paused, set_is_paused] = useState(false);
@@ -279,32 +279,7 @@ const Pathfinding = () => {
       </div>
 
     <div className="other">
-      <p>Other things about the algorithm.....</p>
-      <p>Other things about the algorithm.....</p>
-      <p>Other things about the algorithm.....</p>
-      <p>Other things about the algorithm.....</p>
-      <br />
-      <p>Other things about the algorithm.....</p>
-      <p>Other things about the algorithm.....</p>
-      <p>Other things about the algorithm.....</p>
-      <p>Other things about the algorithm.....</p>
-      <br />
-      <p>Other things about the algorithm.....</p>
-      <p>Other things about the algorithm.....</p>
-      <p>Other things about the algorithm.....</p>
-      <p>Other things about the algorithm.....</p>
-      <br />
-      <p>Other things about the algorithm.....</p>
-      <p>Other things about the algorithm.....</p>
-      <p>Other things about the algorithm.....</p>
-      <p>Other things about the algorithm.....</p>
-      <br />
-      <p>Other things about the algorithm.....</p>
-      <p>Other things about the algorithm.....</p>
-      <p>Other things about the algorithm.....</p>
-      <p>Other things about the algorithm.....</p>
-      <br />
-      <p>Other things about the algorithm.....</p>
+      <br/>
     </div>
   </div>
   );
