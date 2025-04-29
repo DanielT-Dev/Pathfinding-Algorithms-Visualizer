@@ -16,6 +16,7 @@ export const get_time_since = (start_date, current_date) => {
   return time_in_seconds;
 };
 
+let algorithm = -1
 let start = -1, start_coordinates = [-1, -1];
 let end = -1, end_coordinates = [-1, -1];
 let start_color = null;
@@ -24,6 +25,11 @@ let seen_color = null;
 let in_stack_color = null
 let current_color = null
 let wall_color = null
+
+export const unpack_algorithm = (algo_name) => {
+    algorithm = algo_name
+    console.log(algorithm)
+}
 
 export const unpack_colors = (colors) => {
   start_color = colors.filter(color => color.label == 'Start')[0].color;
@@ -92,13 +98,16 @@ export const color_element = async (index, color, animation_duration) => {
 
 export const buildMatrix = (cellRefs) => {
 
-
+  if (algorithm == -1) {
+    alert("No algorithm selected.\n")
+    return "ERROR";
+  }
   if (start_coordinates[0] == -1 || start_coordinates[1] == -1) {
-    alert("Start is not selected!\n");
+    alert("Start element is not selected!\n");
     return "ERROR";
   }
   if (end_coordinates[0] == -1 || end_coordinates[1] == -1) {
-    alert("End is not selected!\n");
+    alert("End element is not selected!\n");
     return "ERROR";
   }
 

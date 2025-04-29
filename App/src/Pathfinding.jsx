@@ -6,7 +6,7 @@ import "./scrollbar.css";
 import Grid from './components/Grid';
 import Dropdwon from './components/Dropdown';
 
-import { buildMatrix, clearMatrix, pause_algorithm, reset_algorithm, resume_algorithm } from './utils';
+import { buildMatrix, clearMatrix, pause_algorithm, reset_algorithm, resume_algorithm, unpack_algorithm } from './utils';
 import { cellRefs } from './components/Grid';
 
 import SliderSpeed from './components/SliderSpeed';
@@ -180,8 +180,6 @@ const Pathfinding = () => {
     setLogs(newLogs);
     setTimestamps(newTimestamps);
     updateLogsAndTimestamps(newLogs, newTimestamps);
-
-    
   }
 
   const assign_algorithm = (algorithm_name) => {
@@ -189,6 +187,9 @@ const Pathfinding = () => {
       setAlgorithm(dfs_task)
     if (algorithm_name == 'BFS')
       setAlgorithm(bfs_task)
+
+    if (algorithm_name != null)
+      unpack_algorithm(algorithm_name)
   }
 
   useEffect(() => {
