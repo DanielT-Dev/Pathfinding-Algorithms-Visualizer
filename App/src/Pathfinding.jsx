@@ -247,7 +247,7 @@ const Pathfinding = () => {
         </div>
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
+      <div className="main">
         <div className="visualizer">
           <Grid selected_type={selected_type}/>
         </div>

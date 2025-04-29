@@ -26,3 +26,13 @@
     object-fit: contain; /* Ensures images or content fit without overflowing */
   }
   
+
+  @media screen and (max-width:600px) {
+    .grid {
+      grid-template-columns: repeat(8, 1fr);
+      grid-template-rows: repeat(8, 1fr);
+      margin-left: 4vw;
+      width: 86vw;
+      height: 86vw;
+    }
+  }
