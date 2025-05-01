@@ -32,7 +32,7 @@
       grid-template-columns: repeat(8, 1fr);
       grid-template-rows: repeat(8, 1fr);
       margin-left: 4vw;
-      width: 86vw;
+      width: 90vw;
       height: 86vw;
     }
   }
