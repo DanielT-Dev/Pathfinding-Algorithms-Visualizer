@@ -25,9 +25,8 @@ export function DFS(matrix)
     let row;
     let col;
     let step;
-
-    let inStack = 0;
     let visited = 0;
+    let inStack = 0;
     let revisited = 0;
 
     st.push([start[0], start[1], 1]);

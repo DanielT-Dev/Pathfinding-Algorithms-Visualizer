@@ -22,7 +22,6 @@ export function Lee(matrix)
     }
 
     let queue = [];
-    
     let visited = 0;
     let revisited = 0;
     let inQueue = 0;

@@ -138,9 +138,29 @@ let isPaused = false;
 let reset_signal = false;
 
 // Pause the algorithm
-export const pause_algorithm = () => {
+export const pause_algorithm = (set_telemetry) => {
   isPaused = true;
+  set_telemetry(get_telemetry());
 };
+
+let visited = 0
+let in_processing = 0
+let min_path_length = 0
+let total_checks = 0
+
+export const get_telemetry = () => {
+    let result = {
+        visited,
+        in_processing,
+        min_path_length,
+        total_checks
+    };
+
+    // Reset telemetry parameters before sending the result.
+    // [disabled] visited = min_path_length = total_checks = 0;
+
+    return result;
+}
 
 // Resume the algorithm
 export const resume_algorithm = () => {
@@ -188,10 +208,13 @@ export async function colorMatrix(changes) {
     if (state === "in stack") {
       console.log(speed);
       await color_element(i * 15 + j, in_stack_color, animation_duration);
+      in_processing++;
     } else if (state === "current") {
       await color_element(i * 15 + j, current_color, animation_duration);
     } else {
       await color_element(i * 15 + j, seen_color, animation_duration);
+      in_processing--;
+      visited++;
     }
   }
 }

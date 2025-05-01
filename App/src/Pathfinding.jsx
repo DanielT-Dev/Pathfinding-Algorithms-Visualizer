@@ -29,6 +29,7 @@ const Pathfinding = () => {
 
   const { colors } = useColors();
   const { speeds } = useSpeeds();
+  const [telemetry, set_telemetry] = useState({});
   const { is_running, set_is_running, algorithm_name, set_algorithm_name } = useControls();
   const { dfs_task, set_dfs_task, bfs_task, set_bfs_task } = useTasks();
   // Wall element type selected by default
@@ -155,7 +156,7 @@ const Pathfinding = () => {
     setTimestamps(newTimestamps);
     updateLogsAndTimestamps(newLogs, newTimestamps);
 
-    pause_algorithm();
+    pause_algorithm(set_telemetry);
   }
 
   useEffect(() => {
@@ -200,8 +201,8 @@ const Pathfinding = () => {
     
   }, [algorithm_name])
   useEffect(() => {
-    const updatedDfsTask = DFS_DTO(colors, speed_params);
-    const updatedBfsTask = BFS_DTO(colors, speed_params);
+    const updatedDfsTask = DFS_DTO(colors, speed_params, set_telemetry);
+    const updatedBfsTask = BFS_DTO(colors, speed_params, set_telemetry);
 
     set_dfs_task(updatedDfsTask);
     set_bfs_task(updatedBfsTask);
@@ -212,6 +213,9 @@ const Pathfinding = () => {
       assign_algorithm(algorithm_name)
     }
   }, [dfs_task, bfs_task]);
+  useEffect(() => {
+    // [Debugging] console.log("Telemetry: ", telemetry)
+  }, [telemetry])
 
   return (
     <div className="main_container">
@@ -275,6 +279,23 @@ const Pathfinding = () => {
           </div>
           <div>
             <h6>Live Stats</h6>
+            <div className="logs scrollbar">
+              <p>
+                Visited: {telemetry.visited ? telemetry.visited : 0}
+              </p>
+              <p>
+                In-Processing: {telemetry.in_processing ? telemetry.in_processing : 0}
+              </p>
+              <p>
+                Unvisited: {telemetry.visited ? 15 * 15 -  telemetry.visited : 0}
+              </p>
+              <p>
+                Minimum Path Length: {telemetry.min_path_length ? telemetry.min_path_length : 0}
+              </p>
+              <p>
+                Total Checks: {telemetry.total_checks ? telemetry.total_checks : 0}
+              </p>
+            </div>
           </div>
         </div>
       </div>

@@ -6,7 +6,7 @@ const SpeedsContext = createContext();
 // SpeedProvider component to provide the speeds state and update function
 export const SpeedsProvider = ({ children }) => {
     
-    const [speeds, set_speeds] = useState([0.1, 0.25, 0.5, 0.75, 1, 2, 3, 4]);
+    const [speeds, set_speeds] = useState([0.1, 0.25, 0.5, 0.75, 1, 2, 3, 5]);
 
     const changeSpeed = (newSpeed) => {
         set_speeds(newSpeed);

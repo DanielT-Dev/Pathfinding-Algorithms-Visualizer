@@ -272,7 +272,15 @@ h1 {
     .live_stats {
         display: block !important;
         width: 100%;
+        height: 60vh;
         border: none;
+    }
+    .live_stats h6 {
+        font-size: 2.5vh;
+    }
+    .live_stats p{
+        margin-left: 3vw;
+        font-size: 2vh;
     }
     .main {
         flex-direction: column;
