@@ -47,6 +47,15 @@ export const unpack_speed = (new_speed) => {
   console.log(speed);
 }
 
+function update_telemetry(old_color, new_color) {
+  if (old_color == in_stack_color)
+    in_processing--;
+  if (new_color == in_stack_color)
+    in_processing++;
+  if (new_color == seen_color)
+    visited++;
+}
+
 export const color_element = async (index, color, animation_duration) => {
   const cellRef = document.querySelector(`[data-index='${index}']`);
   if (cellRef) {
@@ -68,6 +77,12 @@ export const color_element = async (index, color, animation_duration) => {
     }
 
     if (cellRef.style.background != color) {
+
+      // Update current telemetry parameters when the elements changes color (state)
+      let old_color = cellRef.style.background
+      let new_color = color
+      update_telemetry(old_color, new_color)
+
       cellRef.style.animation = "none"; // Reset animation
       cellRef.offsetHeight; // Trigger reflow (hack to restart animation)
 
@@ -121,6 +136,7 @@ export const buildMatrix = (cellRefs) => {
     for (let j = 0; j < cols; j++) {
       if (cellRefs.current[(i * cols) + j].style.background == wall_color) {
         matrix[i][j] = -1;
+        blocked++;
       }
       else {
         matrix[i][j] = 0;
@@ -147,28 +163,39 @@ let visited = 0
 let in_processing = 0
 let min_path_length = 0
 let total_checks = 0
+let blocked = 0
 
-export const get_telemetry = () => {
+export const get_telemetry = (signal = "non-final") => {
     let result = {
         visited,
         in_processing,
         min_path_length,
-        total_checks
+        total_checks,
+        blocked,
     };
 
     // Reset telemetry parameters before sending the result.
-    // [disabled] visited = min_path_length = total_checks = 0;
+    // Reset telemetry
+    if (signal == "final") {
+      visited = 0
+      in_processing = 0
+      min_path_length = 0
+      total_checks = 0
+      blocked = 0
+    }
 
     return result;
 }
 
 // Resume the algorithm
-export const resume_algorithm = () => {
+export const resume_algorithm = (set_telemetry) => {
   isPaused = false;
+  set_telemetry(get_telemetry())
 };
 
-export const reset_algorithm = (new_signal) => {
-  reset_signal = new_signal
+export const reset_algorithm = (new_signal, set_telemetry) => {
+  reset_signal = new_signal  
+  set_telemetry(get_telemetry("final"))
 }
 
 export async function colorMatrix(changes) {
@@ -208,13 +235,10 @@ export async function colorMatrix(changes) {
     if (state === "in stack") {
       console.log(speed);
       await color_element(i * 15 + j, in_stack_color, animation_duration);
-      in_processing++;
     } else if (state === "current") {
       await color_element(i * 15 + j, current_color, animation_duration);
     } else {
       await color_element(i * 15 + j, seen_color, animation_duration);
-      in_processing--;
-      visited++;
     }
   }
 }

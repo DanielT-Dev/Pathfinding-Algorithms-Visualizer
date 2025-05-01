@@ -19,7 +19,7 @@ export const DFS_DTO = (colors, speeds_params, set_telemetry) => {return {
 
             await colorMatrix(changes_queue, speeds_params.speed_values[speeds_params.selected_speed])
 
-            set_telemetry(get_telemetry())
+            set_telemetry(get_telemetry("final"))
 
             console.log("[back-end] Task DFS finished with 0 errors")
         }
@@ -45,7 +45,7 @@ export const BFS_DTO = (colors, speeds_params, set_telemetry) => { return {
             
             await colorMatrix(changes_queue, speeds_params.speed_values[speeds_params.selected_speed])
 
-            set_telemetry(get_telemetry())
+            set_telemetry(get_telemetry("final"))
 
             console.log("[back-end] Task BFS finished with 0 errors")
         }

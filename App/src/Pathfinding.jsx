@@ -131,7 +131,7 @@ const Pathfinding = () => {
       setTimestamps(newTimestamps);
       updateLogsAndTimestamps(newLogs, newTimestamps);
 
-      resume_algorithm();
+      resume_algorithm(set_telemetry);
     }
   };
 
@@ -168,7 +168,7 @@ const Pathfinding = () => {
     set_is_running(false);
     set_is_paused(false);
 
-    reset_algorithm(new_signal)
+    reset_algorithm(new_signal, set_telemetry)
 
     if (new_signal == true) {
       await new Promise(resolve => setTimeout(resolve, 100));
@@ -287,13 +287,17 @@ const Pathfinding = () => {
                 In-Processing: {telemetry.in_processing ? telemetry.in_processing : 0}
               </p>
               <p>
-                Unvisited: {telemetry.visited ? 15 * 15 -  telemetry.visited : 0}
+                Unvisited: {telemetry.visited ? 15 * 15 -  telemetry.visited - telemetry.blocked: 0}
+              </p>
+              <p>
+                Blocked: {telemetry.blocked ? telemetry.blocked: 0}
               </p>
               <p>
                 Minimum Path Length: {telemetry.min_path_length ? telemetry.min_path_length : 0}
               </p>
               <p>
-                Total Checks: {telemetry.total_checks ? telemetry.total_checks : 0}
+                Exploration Density: {telemetry.visited ? ((telemetry.visited / (15 * 15)) * 100).toFixed(2) + '%'
+ : 0 + '%'}
               </p>
             </div>
           </div>
