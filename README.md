@@ -10,3 +10,5 @@
 <br/>
 <img style="width: 90%; height: 50vh;" src="https://github.com/DanielT-Dev/Pathfinding-Algorithms-Visualizer/blob/main/images/image3.png"/>
 <br/>
+<img style="width: 30%; height: 50vh;" src="https://github.com/DanielT-Dev/Pathfinding-Algorithms-Visualizer/blob/main/images/image4.png"/>
+<br/>
