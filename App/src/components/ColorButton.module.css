@@ -44,3 +44,9 @@ input[type="color"]::-webkit-color-swatch-wrapper {
 input[type="color"]::-webkit-color-swatch {
 	border: none;
 }
+@media screen and (max-width: 600px) {
+    .colorButtonWrapper input[type="color"] {
+        width: 10vw;
+        height: 10vw;
+    }
+}

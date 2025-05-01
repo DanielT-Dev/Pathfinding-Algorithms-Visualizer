@@ -258,9 +258,15 @@ h1 {
         margin-bottom: 10vh;
     }
     .visualizer {
+        margin-top: 30vh;
         height: 88vw;
     }
     .controls {
+        display: flex;
+        flex-direction: row;
+        width: 80%;
+        margin-left: 20%;
+        margin-top: 7.5vh;
         float: none;
     }
     .live_stats {
@@ -282,5 +288,29 @@ h1 {
         width: 70%;
         font-size: 1.75vh;
         margin-left: 15%;
+    }
+    .select_colors {
+        margin-top: 2vh;
+        display: flex;
+        flex-direction: row;
+    }
+    .select_colors > * {
+        width: 24%;
+    }
+    .select_speed {
+        width: 100%;
+    }
+    .controls button {
+        display: inline;
+        width: 25vw;
+        height: 18vw;
+        margin-left: 2.5vw;
+        margin-right: 2.5vw;
+        border-radius: 20px;
+    }
+    .controls button img {
+        width: 2.5vh;
+        height: 2.5vh;
+        position: relative;
     }
 }

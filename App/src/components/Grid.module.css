@@ -29,9 +29,10 @@
 
   @media screen and (max-width:600px) {
     .grid {
-      grid-template-columns: repeat(8, 1fr);
-      grid-template-rows: repeat(8, 1fr);
+      grid-template-columns: repeat(15, 1fr);
+      grid-template-rows: repeat(15, 1fr);
       margin-left: 4vw;
+      margin-top: 0vh;
       width: 90vw;
       height: 86vw;
     }
