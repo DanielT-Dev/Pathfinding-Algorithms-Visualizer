@@ -233,21 +233,38 @@ const Pathfinding = () => {
         </div>
 
         <div className="controls">
+          
+          <div class="tooltip-container">
+            <button onClick={handleStart}>
+              <img style={{scale: 1.8}} src="controls0.png" alt="Control 1" />
+            </button>
+            <div class="tooltip-text">Generate random grid</div>
+          </div>
+
           {
             is_running == false &&
-            <button onClick={handleStart}>
-              <img src="controls1.png" alt="Control 1" />
-            </button>
+            <div class="tooltip-container">
+              <button onClick={handleStart}>
+                <img src="controls1.png" alt="Control 1" />
+              </button>
+              <div class="tooltip-text">Start algorithm</div>
+            </div>
           }
           {
             is_running == true &&
-            <button onClick={handlePause}>
-            <img src="controls2.png" alt="Control 2" />
-          </button>
+            <div class="tooltip-container">
+              <button onClick={handlePause}>
+                <img src="controls2.png" alt="Control 2" />
+              </button>
+              <div class="tooltip-text">Pause algorithm</div>
+            </div>
           }
-          <button onClick={() => handleReset(true)}>
-            <img src="controls4.png" alt="Control 4" />
-          </button>
+          <div class="tooltip-container">
+            <button onClick={() => handleReset(true)}>
+              <img src="controls4.png" alt="Control 4" />
+            </button>
+            <div class="tooltip-text">Reset algorithm</div>
+          </div>
         </div>
       </div>
 
@@ -261,6 +278,18 @@ const Pathfinding = () => {
             <h6>Command Logs</h6>
             <div className="logs scrollbar">
             {
+              logs.length == 0 && 
+              <div style={{
+                display: "flex", 
+                flexDirection: "row",
+              }}>
+                <img src="/info2.png" alt="info"/>
+                <p style={{width: "70%",}}>Select and run an algorithm to view logs and stats.</p>
+              </div>
+              
+            }
+            {
+              logs.length != 0 && 
               logs.map((log, index) => {
                 return (
                   <p 

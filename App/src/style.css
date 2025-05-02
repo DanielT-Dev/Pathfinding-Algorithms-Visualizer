@@ -6,6 +6,8 @@
 
 body {
     margin: 0;
+    width: 100vw;
+    overflow-x: hidden;
 }
 
 button {
@@ -233,6 +235,41 @@ h1 {
     margin-right: calc(0.5vw - 2px);
     border-radius: 20px;
 }
+.tooltip-container {
+    position: relative;
+    display: inline-block;
+  }
+
+  .tooltip-container .tooltip-text {
+    visibility: hidden;
+    max-width: 220px;
+    min-width: 180px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Position above the button */
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .tooltip-container:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+  }
+.live_stats img {
+    width: 2.5vh;
+    height: 2.5vh;
+    margin-left: 10%;
+    margin-top: 1.5vh;
+    margin-right: -0.5vh;
+    opacity: 0.5;
+}
 @media screen and (max-width: 600px){
     .main_container {
         width: 98vw;
@@ -265,7 +302,7 @@ h1 {
         display: flex;
         flex-direction: row;
         width: 80%;
-        margin-left: 20%;
+        margin-left: 12%;
         margin-top: 7.5vh;
         float: none;
     }
@@ -279,6 +316,7 @@ h1 {
         font-size: 2.5vh;
     }
     .live_stats p{
+        width: 90%;
         margin-left: 3vw;
         font-size: 2vh;
     }
@@ -310,15 +348,20 @@ h1 {
     }
     .controls button {
         display: inline;
-        width: 25vw;
+        width: 20vw;
         height: 18vw;
         margin-left: 2.5vw;
         margin-right: 2.5vw;
         border-radius: 20px;
     }
     .controls button img {
-        width: 2.5vh;
-        height: 2.5vh;
+        width: 3vh;
+        height: 3vh;
         position: relative;
+    }
+    .live_stats img {
+        width: 3.5vh;
+        height: 3.5vh;
+        margin-right: 2vw;
     }
 }
