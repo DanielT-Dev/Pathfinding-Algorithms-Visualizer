@@ -1,4 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
+import { recolorMatrix, unpack_colors } from '../utils';
+import { cellRefs } from '../components/Grid';
 
 // Create a Context for the colors state
 const ColorsContext = createContext();
@@ -17,8 +19,10 @@ export const ColorsProvider = ({ children }) => {
     };
 
     useEffect(() => {
-      //colors.map(color => {console.log(color.label + " " + color.color)});
-    }, [colors])
+        if (typeof colors === 'undefined') return;
+        
+      }, [colors]);
+      
 
     return (
         <ColorsContext.Provider value={{ colors, changeColors }}>

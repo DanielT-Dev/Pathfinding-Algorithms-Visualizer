@@ -57,7 +57,7 @@ function update_telemetry(old_color, new_color) {
 }
 
 export const color_element = async (index, color, animation_duration) => {
-  const cellRef = document.querySelector(`[data-index='${index}']`);
+  let cellRef = document.querySelector(`[data-index='${index}']`);
   if (cellRef) {
 
     // Make sure start element is uinque
@@ -90,8 +90,6 @@ export const color_element = async (index, color, animation_duration) => {
       cellRef.style.animation = "color_element linear forwards";
       cellRef.style.animationDuration = animation_duration;
       await new Promise(resolve => setTimeout(resolve, animation_duration));
-
-      cellRef.style.background = color;
     }
 
     // Keep track of start index
@@ -107,7 +105,7 @@ export const color_element = async (index, color, animation_duration) => {
   }
 
   return {
-    color: cellRef.style.background,
+    color: cellRef.color,
   }
 };
 
@@ -149,6 +147,44 @@ export const buildMatrix = (cellRefs) => {
 
   return matrix;
 };
+
+const toRGB = (color) => {
+  const temp = document.createElement("div");
+  temp.style.color = color;
+  document.body.appendChild(temp);
+  const rgb = window.getComputedStyle(temp).color;
+  document.body.removeChild(temp);
+  return rgb;
+};
+
+
+export const recolorMatrix = (cellRefs, new_colors) => {
+  const rows = 15;
+  const cols = 15;
+
+  for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < cols; j++) {
+      const cell = cellRefs.current[(i * cols) + j];
+      if (!cell) continue;
+
+      const bg = window.getComputedStyle(cell).backgroundColor;
+
+      if (bg === toRGB(start_color)) {
+        console.log("Change detected (start)");
+        cell.style.backgroundColor = new_colors[0].color;
+      } else if (bg === toRGB(wall_color)) {
+        console.log("Change detected (wall)");
+        cell.style.backgroundColor = new_colors[1].color;
+      } else if (bg === toRGB(end_color)) {
+        console.log("Change detected (end)");
+        cell.style.backgroundColor = new_colors[3].color;
+      }
+    }
+  }
+
+  unpack_colors(new_colors);
+};
+
 
 let isPaused = false;
 let reset_signal = false;

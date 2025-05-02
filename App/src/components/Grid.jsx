@@ -11,10 +11,13 @@ export const cellRefs = { current: []}
   
 const Grid = ({ selected_type }) => {
 
-  const { colors } = useColors();
-
   const rows = 15;
   const cols = 15;
+
+  const [cellColors, setCellColors] = useState(Array.from({ length: rows * cols }).fill({label: "", color: "rgb(240, 240, 240"}));  
+
+  const { colors } = useColors();
+
   const [cells] = useState(
     Array.from({ length: rows * cols })
   );
@@ -52,9 +55,41 @@ const Grid = ({ selected_type }) => {
     return () => document.removeEventListener("mouseup", handleMouseUp);
   }, []);
 
+  useEffect(() => {
+    if (typeof colors === 'undefined') return;
+
+    if (colors) {
+      syncColors();
+    }
+
+  }, [colors]);
+
+  const syncColors = () => {
+    setCellColors(prevColors => {
+      return prevColors.map(cell => {
+        console.log(cell.label)
+        if (!cell.label) return cell; // Skip empty cells
+  
+        // Find the corresponding new color from the updated colors array
+        const newColorEntry = colors.find(c => c.label === cell.label);
+        if (!newColorEntry) return cell; // If label not found in updated colors, skip
+  
+        // If the color is different, update it
+        if (cell.color !== newColorEntry.color) {
+          return { ...cell, color: newColorEntry.color };
+        }
+  
+        return cell; // No change needed
+      });
+    });
+  };
+  
+
   return (
-    <div className={styles.grid}>
-      {cells.map((_, i) => (
+    <div 
+      className={styles.grid} 
+    >
+      {cellColors.map((color, i) => (
         <>
           <div
             key={i}
@@ -63,6 +98,7 @@ const Grid = ({ selected_type }) => {
             data-index={i}
             onMouseDown={() => handleMouseDown(i)}
             onMouseEnter={() => handleMouseEnter(i)}
+            style={{ backgroundColor: color.color}}
           ></div>
         </>
       ))}

@@ -235,7 +235,7 @@ const Pathfinding = () => {
         <div className="controls">
           
           <div class="tooltip-container">
-            <button onClick={handleStart}>
+            <button disabled={is_running || is_paused}>
               <img style={{scale: 1.8}} src="controls0.png" alt="Control 1" />
             </button>
             <div class="tooltip-text">Generate random grid</div>
