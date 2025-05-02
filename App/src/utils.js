@@ -57,7 +57,7 @@ function update_telemetry(old_color, new_color) {
 }
 
 export const color_element = async (index, color, animation_duration) => {
-  let cellRef = document.querySelector(`[data-index='${index}']`);
+  const cellRef = document.querySelector(`[data-index='${index}']`);
   if (cellRef) {
 
     // Make sure start element is uinque
@@ -90,6 +90,8 @@ export const color_element = async (index, color, animation_duration) => {
       cellRef.style.animation = "color_element linear forwards";
       cellRef.style.animationDuration = animation_duration;
       await new Promise(resolve => setTimeout(resolve, animation_duration));
+
+      cellRef.style.background = color;
     }
 
     // Keep track of start index
@@ -105,7 +107,7 @@ export const color_element = async (index, color, animation_duration) => {
   }
 
   return {
-    color: cellRef.color,
+    color: cellRef.style.background,
   }
 };
 

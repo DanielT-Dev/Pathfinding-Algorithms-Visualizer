@@ -322,9 +322,6 @@ const Pathfinding = () => {
                 Blocked: {telemetry.blocked ? telemetry.blocked: 0}
               </p>
               <p>
-                Minimum Path Length: {telemetry.min_path_length ? telemetry.min_path_length : 0}
-              </p>
-              <p>
                 Exploration Density: {telemetry.visited ? ((telemetry.visited / (15 * 15)) * 100).toFixed(2) + '%'
  : 0 + '%'}
               </p>
