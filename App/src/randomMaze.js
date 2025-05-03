@@ -67,7 +67,7 @@ function generateMaze(rows, cols) {
         possibleStart.pop();
 
         if (possibleStart.length <= 1) {
-            maze[startRow][startCol] = visited;
+            maze[startRow][startCol] = unvisited;
             break;
         }
 

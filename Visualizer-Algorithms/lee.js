@@ -25,21 +25,48 @@ export function Lee(matrix)
     let visited = 0;
     let revisited = 0;
     let inQueue = 0;
+    let currentDistance = 0;
 
-    queue.push(start);
+    queue.push([start[0], start[1], 0]);
     changes.push([start[0], start[1], 'in stack'])
 
     inQueue++;
 
     while (queue.length != 0)
     {
-        let [row, col] = queue.shift();
+        let [row, col, currentDistance] = queue.shift();
+        currentDistance++;
         changes.push([row, col, 'current'])
         inQueue--;
         
         if (row == end[0] && col == end[1])
         {
-            console.table(matrix);
+            let currentCell = end;
+
+            while (currentCell[0] != start[0] || currentCell[1] != start[1])
+            {
+                if (currentCell[0] != end[0] || currentCell[1] != end[1])
+                {
+                    changes.push([currentCell[0], currentCell[1], 'minimum path']);
+                }
+                else 
+                {
+                    changes.push([currentCell[0], currentCell[1], 'end']);
+                }
+
+                for (let d = 0; d <= 3; d++)
+                {
+                    let newCell = [currentCell[0] + dx[d], currentCell[1] + dy[d]];
+
+                    if (inMatrix(newCell[0], newCell[1], rows, cols) && matrix[newCell[0]][newCell[1]] + 1 == matrix[currentCell[0]][currentCell[1]])
+                    {
+                        currentCell = newCell;
+                        break;
+                    }
+                }
+            }
+
+            changes.push([start[0], start[1], 'start'])
             return changes;
         }
 
@@ -58,15 +85,13 @@ export function Lee(matrix)
                 visited++;
                 
                 matrix[newRow][newCol] = matrix[row][col] + 1;
-                queue.push([newRow, newCol]);
+                queue.push([newRow, newCol, currentDistance]);
                 changes.push([newRow, newCol, 'in stack'])
                 inQueue++;
             }
         }
 
         changes.push([row, col, 'visited'])
-        
-        //console.log("visited: " + visited + "\nrevisited: " + revisited + "\ninQueue: " + inQueue + "\n");
     }
 
     console.log("Not found!\n");

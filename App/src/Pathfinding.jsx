@@ -82,7 +82,7 @@ const Pathfinding = () => {
 
   const [is_paused, set_is_paused] = useState(false);
 
-  const [algorithm, setAlgorithm] = useState(dfs_task);
+  const [algorithm, setAlgorithm] = useState(bfs_task);
 
   const [logs, setLogs] = useState([]);
   const [timestamps, setTimestamps] = useState([]);
@@ -110,7 +110,7 @@ const Pathfinding = () => {
       // Default algorithm == DFS
       if (!algorithm_name)
       {
-        assign_algorithm('DFS');
+        assign_algorithm('BFS');
       }
 
       console.log("[front-end] Algorithm started")
@@ -238,7 +238,6 @@ const Pathfinding = () => {
     }
   }, [dfs_task, bfs_task]);
   useEffect(() => {
-    // [Debugging] console.log("Telemetry: ", telemetry)
   }, [telemetry])
 
   return (
@@ -348,6 +347,9 @@ const Pathfinding = () => {
               <p>
                 Exploration Density: {telemetry.visited ? ((telemetry.visited / (rows * cols)) * 100).toFixed(2) + '%'
  : 0 + '%'}
+              </p>
+              <p>
+                 Minimum Path: {(telemetry.min_path_length > 2) ? telemetry.min_path_length : 0}
               </p>
             </div>
           </div>

@@ -27,10 +27,10 @@ let seen_color = null;
 let in_stack_color = null
 let current_color = null
 let wall_color = null
+let min_path_color = null;
 
 export const unpack_algorithm = (algo_name) => {
-    algorithm = algo_name
-    console.log(algorithm)
+  algorithm = algo_name
 }
 
 export const unpack_colors = (colors) => {
@@ -40,6 +40,7 @@ export const unpack_colors = (colors) => {
   wall_color = colors.filter(color => color.label == 'Wall')[0].color;
   in_stack_color = "rgb(170, 215, 200)";
   current_color = "rgb(100, 100, 255)";
+  min_path_color = "rgb(40, 151, 40)";
 }
 
 let speed = 1;
@@ -55,6 +56,8 @@ function update_telemetry(old_color, new_color) {
     in_processing++;
   if (new_color == seen_color)
     visited++;
+  if (new_color == min_path_color)
+    min_path_length++;
 }
 
 export const color_element = async (index, color, animation_duration) => {
@@ -167,13 +170,10 @@ export const recolorMatrix = (cellRefs, new_colors) => {
       const bg = window.getComputedStyle(cell).backgroundColor;
 
       if (bg === toRGB(start_color)) {
-        console.log("Change detected (start)");
         cell.style.backgroundColor = new_colors[0].color;
       } else if (bg === toRGB(wall_color)) {
-        console.log("Change detected (wall)");
         cell.style.backgroundColor = new_colors[1].color;
       } else if (bg === toRGB(end_color)) {
-        console.log("Change detected (end)");
         cell.style.backgroundColor = new_colors[3].color;
       }
     }
@@ -194,7 +194,7 @@ export const pause_algorithm = (set_telemetry) => {
 
 let visited = 0
 let in_processing = 0
-let min_path_length = 0
+let min_path_length = 2
 let total_checks = 0
 let blocked = 0
 
@@ -212,7 +212,7 @@ export const get_telemetry = (signal = "non-final") => {
   if (signal == "final") {
     visited = 0
     in_processing = 0
-    min_path_length = 0
+    min_path_length = 2// start & finish
     total_checks = 0
     blocked = 0
   }
@@ -269,6 +269,12 @@ export async function colorMatrix(changes) {
       await color_element(i * rows + j, in_stack_color, animation_duration);
     } else if (state === "current") {
       await color_element(i * rows + j, current_color, animation_duration);
+    } else if (state == "minimum path") {
+      await color_element(i * rows + j, min_path_color, animation_duration);
+    } else if (state == "start") {
+      await color_element(i * rows + j, start_color, animation_duration);
+    } else if (state == "end") {
+      await color_element(i * rows + j, end_color, animation_duration);
     } else {
       await color_element(i * rows + j, seen_color, animation_duration);
     }
