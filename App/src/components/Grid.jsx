@@ -68,7 +68,6 @@ const Grid = ({ selected_type }) => {
   const syncColors = () => {
     setCellColors(prevColors => {
       return prevColors.map(cell => {
-        //console.log(cell.label)
         if (!cell.label) return cell; // Skip empty cells
   
         // Find the corresponding new color from the updated colors array

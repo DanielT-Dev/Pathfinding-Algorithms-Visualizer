@@ -35,7 +35,6 @@ const Pathfinding = () => {
   const [telemetry, set_telemetry] = useState({});
   const { is_running, set_is_running, algorithm_name, set_algorithm_name } = useControls();
   const { dfs_task, set_dfs_task, bfs_task, set_bfs_task } = useTasks();
-
   // Wall element type selected by default
   const [selected_type, set_selected_type] = useState(1);
   

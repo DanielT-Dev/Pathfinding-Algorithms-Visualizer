@@ -29,8 +29,8 @@ let current_color = null
 let wall_color = null
 
 export const unpack_algorithm = (algo_name) => {
-  algorithm = algo_name
-  console.log(algorithm)
+    algorithm = algo_name
+    console.log(algorithm)
 }
 
 export const unpack_colors = (colors) => {
@@ -99,12 +99,12 @@ export const color_element = async (index, color, animation_duration) => {
     // Keep track of start index
     if (color == start_color) {
       start = index;
-      start_coordinates = [parseInt(index / rows), index % rows]; // was 15, repalced with rows ?
+      start_coordinates = [parseInt(index / rows), index % cols]; // was 15, repalced with rows ?
     }
     // Keep track of start index
     if (color == end_color) {
       end = index;
-      end_coordinates = [parseInt(index / rows), index % rows]; // was 15, repalced with rows ?
+      end_coordinates = [parseInt(index / rows), index % cols]; // was 15, repalced with rows ?
     }
   }
 
