@@ -6,7 +6,7 @@ import "./scrollbar.css";
 import Grid, { cols, rows } from './components/Grid';
 import Dropdwon from './components/Dropdown';
 
-import { buildMatrix, clearMatrix, pause_algorithm, reset_algorithm, resume_algorithm, unpack_algorithm } from './utils';
+import { buildMatrix, clearMatrix, get_telemetry, is_coloring, pause_algorithm, reset_algorithm, resume_algorithm, unpack_algorithm } from './utils';
 import { cellRefs } from './components/Grid';
 
 import { handleRandomButton } from './randomMaze';
@@ -115,6 +115,20 @@ const Pathfinding = () => {
 
       console.log("[front-end] Algorithm started")
 
+      function cron_update(){
+        set_telemetry(get_telemetry());
+      }
+      function cron_update_stopper(){
+        if (is_coloring == false) {
+          clearInterval(intervalId);
+          //console.log("Interval cleared");
+        }
+      }
+
+      // Start cronometrical updates
+      const intervalId = setInterval(cron_update, 700);
+      setInterval(cron_update_stopper, 700);
+
       const matrix = buildMatrix(cellRefs);
 
       if (matrix == "ERROR")
@@ -125,6 +139,7 @@ const Pathfinding = () => {
 
       algorithm.controls.start(matrix)
       console.log("[front-end] Algorithm finished successfully")
+
     } else {
       const start_time = timestamps[0].timestamp;
       const current_time = new Date();

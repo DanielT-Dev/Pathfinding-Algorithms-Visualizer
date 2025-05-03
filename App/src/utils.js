@@ -220,7 +220,6 @@ export const get_telemetry = (signal = "non-final") => {
 
   return result;
 }
-
 // Resume the algorithm
 export const resume_algorithm = (set_telemetry) => {
   isPaused = false;
@@ -232,15 +231,17 @@ export const reset_algorithm = (new_signal, set_telemetry) => {
   set_telemetry(get_telemetry("final"))
 }
 
+export let is_coloring = false;
+
 export async function colorMatrix(changes) {
 
+  is_coloring = true;
   isPaused = false;
   reset_signal = false
   let coloringJustStarted = true;
 
   // While queue of changes is NOT empty
   while (changes.isEmpty() == false) {
-
     // Get first element + Remove first element
     let [i, j, state] = changes.dequeue();
 
@@ -254,7 +255,6 @@ export async function colorMatrix(changes) {
         reset_signal = false
         return;
       }
-      console.log("Paused")
       await new Promise(resolve => setTimeout(resolve, 100)); // Wait 100ms to check again
     }
 
@@ -267,7 +267,6 @@ export async function colorMatrix(changes) {
     coloringJustStarted = false;
 
     if (state === "in stack") {
-      console.log(speed);
       await color_element(i * rows + j, in_stack_color, animation_duration);
     } else if (state === "current") {
       await color_element(i * rows + j, current_color, animation_duration);
@@ -275,6 +274,7 @@ export async function colorMatrix(changes) {
       await color_element(i * rows + j, seen_color, animation_duration);
     }
   }
+  is_coloring = false;
 }
 
 export async function colorRandomMatrix(maze, rows, cols) {
