@@ -38,15 +38,14 @@ export const unpack_colors = (colors) => {
   end_color = colors.filter(color => color.label == 'Finish')[0].color;
   seen_color = colors.filter(color => color.label == 'Seen')[0].color;
   wall_color = colors.filter(color => color.label == 'Wall')[0].color;
-  in_stack_color = "rgb(255, 150, 50)";
-  current_color = "rgb(100, 200, 100)";
+  in_stack_color = "rgb(170, 215, 200)";
+  current_color = "rgb(100, 100, 255)";
 }
 
 let speed = 1;
 
 export const unpack_speed = (new_speed) => {
   speed = new_speed;
-  console.log(speed);
 }
 
 function update_telemetry(old_color, new_color) {

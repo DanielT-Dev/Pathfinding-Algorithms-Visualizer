@@ -10,8 +10,8 @@ export const ColorsProvider = ({ children }) => {
     const [colors, setColors] = useState([
         { label: "Start", color: "rgb(57, 218, 230)" },
         { label: "Wall", color: "rgb(30, 30, 30)" },
-        { label: "Seen", color: "rgb(255, 238, 110)" },
-        { label: "Finish", color: "rgb(17, 207, 32)" },
+        { label: "Seen", color: "rgb(200, 235, 200)" },
+        { label: "Finish", color: "rgb(22, 255, 41)" },
     ]);
 
     const changeColors = (newColors) => {

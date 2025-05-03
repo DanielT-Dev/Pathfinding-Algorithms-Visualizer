@@ -127,7 +127,7 @@ const Pathfinding = () => {
 
       // Start cronometrical updates
       const intervalId = setInterval(cron_update, 700);
-      setInterval(cron_update_stopper, 700);
+      setInterval(cron_update_stopper, 300);
 
       const matrix = buildMatrix(cellRefs);
 
